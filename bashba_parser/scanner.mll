@@ -1,0 +1,43 @@
+{ open Parser }
+
+let dig = ['0'-'9']
+let lit = ['a'-'z' 'A'-'Z']
+
+rule token = parse 
+ ['\n' '\t' '\r' ' '] {token lexbuf} 
+ | "##" {comment lexbuf}
+ | '+' { PLUS }
+ | '-' { MINUS }
+ | '*' { TIMES }
+ | '/' { DIVIDE }
+ | '%' { MOD }
+ | '{' { LBRACE }
+ | '}' { RBRACE }
+ | '(' { LPAREN }
+ | ')' { RPAREN }
+ | ',' { COMMA }
+ | ';' { SEMI }
+ | "and" { AND }
+ | "or" { OR }
+ | "not" { NOT }
+ | "==" { EQ }
+ | "<=" { LTEQ }
+ | ">=" { GTEQ }
+ | "!=" { NEQ }
+ | '>' { GT }
+ | '<' { LT }
+ | '=' { ASSIGN }
+ | "True" { BLIT(true) }
+ | "False" { BLIT(false) }
+ | "while" { WHILE }
+ | "return" { RETURN }
+ | "if"|"elif" { IF }
+ | "else" { ELSE }
+ | dig+ as d { LIT(int_of_string d) }
+ | lit ( dig | lit | '_')* as d {ID(d)}
+ | eof { EOF }
+ | _ as c { raise (Failure("NOT ALLOWED")) } 
+
+and rule comment = parse 
+"##" { token lexbuf }
+| _ { comment lexbuf }
