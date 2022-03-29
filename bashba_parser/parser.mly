@@ -4,11 +4,10 @@ open Ast
 %}
 
 %token PLUS MINUS TIMES DIVIDE MOD LBRACE RBRACE LPAREN RPAREN
-%token COMMA SEMI AND OR NOT EQ LTEQ GTEQ NEQ GT LT ASSIGN 
-%token WHILE RETURN IF ELSE EOF
-%token BOOL INT
+%token COMMA SEMI AND OR NOT EQ LTEQ GTEQ NEQ GT LT ASSIGN COLON
+%token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE DEF
+%token BOOL INT STRING NONE
 %token <bool> BLIT
-%token <string> IF
 %token <string> ID
 %token <int> LITERAL
 
@@ -36,6 +35,7 @@ vdecl_rule:
 typ_rule:
   INT       { Int  }
   | BOOL    { Bool }
+  | STRING  { String  }
 
 stmt_list_rule:
     /* nothing */               { []     }
@@ -46,6 +46,8 @@ stmt_rule:
   | LBRACE stmt_list_rule RBRACE                          { Block $2        }
   | IF LPAREN expr_rule RPAREN stmt_rule ELSE stmt_rule   { If ($3, $5, $7) }
   | WHILE LPAREN expr_rule RPAREN stmt_rule               { While ($3,$5)   }
+  | RETURN expr_rule SEMI                                 { Return $2       }
+  | LAMBDA vdecl_list_rule COLON LPAREN stmt_list_rule RPAREN  { Lambda ($2 $5)  }
 
 expr_rule:
   | BLIT                          { BoolLit $1            }
@@ -63,3 +65,12 @@ expr_rule:
   | expr_rule OR expr_rule        { Binop ($1, Or, $3)    }
   | ID ASSIGN expr_rule           { Assign ($1, $3)       }
   | LPAREN expr_rule RPAREN       { $2                    }
+  | CONTINUE                     { Continue              }
+  | BREAK                        { Break                 }
+  | NONE                        { None                  }
+
+control_rule:
+  | BREAK SEMI                 { Break }
+  | CONTINUE SEMI               { Continue }
+
+
