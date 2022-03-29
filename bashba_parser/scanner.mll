@@ -33,6 +33,15 @@ rule token = parse
  | "return" { RETURN }
  | "if"|"elif" { IF }
  | "else" { ELSE }
+ | ':' { COLON }
+ | "lambda" { LAMBDA }
+ | "def" { DEF }
+ | "continue" { CONTINUE }
+ | "break" { BREAK }
+ | "none" { NONE }
+ | "int" { INT }
+ | "bool" { BOOL }
+ | "String" { STRING }
  | dig+ as d { LIT(int_of_string d) }
  | lit ( dig | lit | '_')* as d {ID(d)}
  | eof { EOF }
