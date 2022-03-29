@@ -1,4 +1,3 @@
- 
 %{
 open Ast
 %}
@@ -47,7 +46,6 @@ stmt_rule:
   | IF LPAREN expr_rule RPAREN stmt_rule ELSE stmt_rule   { If ($3, $5, $7) }
   | WHILE LPAREN expr_rule RPAREN stmt_rule               { While ($3,$5)   }
   | RETURN expr_rule SEMI                                 { Return $2       }
-  | LAMBDA vdecl_list_rule COLON LPAREN stmt_list_rule RPAREN  { Lambda ($2 $5)  }
 
 expr_rule:
   | BLIT                          { BoolLit $1            }
@@ -68,9 +66,14 @@ expr_rule:
   | CONTINUE                     { Continue              }
   | BREAK                        { Break                 }
   | NONE                        { None                  }
-
-control_rule:
-  | BREAK SEMI                 { Break }
-  | CONTINUE SEMI               { Continue }
+  | ID LPAREN args_opt RPAREN { Call ($1, $3)  }
+  | LAMBDA args_opt COLON LPAREN stmt_list_rule RPAREN  { Lambda ($2 $5)  }
 
 
+args_opt:
+  /*nothing*/ { [] }
+  | args { $1 }
+
+args:
+  expr  { [$1] }
+  | expr COMMA args { $1::$3 }
