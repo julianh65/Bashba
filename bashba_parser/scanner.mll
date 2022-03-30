@@ -21,8 +21,8 @@ rule token = parse
  | "or" { OR }
  | "not" { NOT }
  | "==" { EQ }
- | "<=" { LTEQ }
- | ">=" { GTEQ }
+ | "<=" { LEQ }
+ | ">=" { GEQ }
  | "!=" { NEQ }
  | '>' { GT }
  | '<' { LT }
@@ -35,7 +35,6 @@ rule token = parse
  | "else" { ELSE }
  | ':' { COLON }
  | "lambda" { LAMBDA }
- | "def" { DEF }
  | "continue" { CONTINUE }
  | "break" { BREAK }
  | "none" { NONE }

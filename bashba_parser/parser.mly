@@ -21,31 +21,72 @@ open Ast
 
 %%
 
-prog_rules:
-  vdecl_list_rule stmt_list_rule EOF { {locals=$1; body=$2} }
+/* add function declarations*/
+program:
+  decls EOF { $1}
 
-vdecl_list_rule:
-  /*nothing*/                   { []       }
-  | vdecl_rule vdecl_list_rule  { $1 :: $2 }
+decls:
+   /* nothing */ { ([], [])               }
+ | vdecl SEMI decls { (($1 :: fst $3), snd $3) }
+ | fdecl decls { (fst $2, ($1 :: snd $2)) }
 
-vdecl_rule:
-  typ_rule ID SEMI { ($1, $2) }
+vdecl_list:
+  /*nothing*/ { [] }
+  | vdecl SEMI vdecl_list  {  $1 :: $3 }
 
-typ_rule:
-  INT       { Int  }
-  | BOOL    { Bool }
-  | STRING  { String  }
+/* int x */
+vdecl:
+  typ ID { ($1, $2) }
 
-stmt_list_rule:
-    /* nothing */               { []     }
-    | stmt_rule stmt_list_rule  { $1::$2 }
+typ:
+    INT   { Int   }
+  | BOOL  { Bool  }
+  | STRING { String }
 
-stmt_rule:
-  expr_rule SEMI                                          { Expr $1         }
-  | LBRACE stmt_list_rule RBRACE                          { Block $2        }
-  | IF LPAREN expr_rule RPAREN stmt_rule ELSE stmt_rule   { If ($3, $5, $7) }
-  | WHILE LPAREN expr_rule RPAREN stmt_rule               { While ($3,$5)   }
-  | RETURN expr_rule SEMI                                 { Return $2       }
+/* fdecl */
+fdecl:
+  vdecl LPAREN formals_opt RPAREN LBRACE vdecl_list stmt_list RBRACE
+  {
+    {
+      rtyp=fst $1;
+      fname=snd $1;
+      formals= $3;
+      locals= $6;
+      body= $7
+    }
+  }
+  | LAMBDA vdecl COLON LPAREN vdecl_list stmt_list RPAREN
+  { {
+    rypt = fst $3;
+    fname = "";
+    formals = $3;
+    locals = $7;
+    body = $8
+  }}
+
+/* formals_opt */
+formals_opt:
+  /*nothing*/ { [] }
+  | formals_list { $1 }
+
+formals_list:
+  vdecl { [$1] }
+  | vdecl COMMA formals_list { $1::$3 }
+  | fdecl { [$1] }
+  | fdecl COMMA formals_list { $1::$3 }
+
+stmt_list:
+  /* nothing */ { [] }
+  | stmt stmt_list  { $1::$2 }
+
+stmt:
+    expr SEMI                               { Expr $1      }
+  | LBRACE stmt_list RBRACE                 { Block $2 }
+  | IF LPAREN expr RPAREN stmt ELSE stmt    { If($3, $5, $7) }
+  | WHILE LPAREN expr RPAREN stmt           { While ($3, $5)  }
+  | RETURN expr SEMI                        { Return $2      }
+  | BREAK                                   { Break }
+  | CONTINUE                                { Continue }
 
 expr_rule:
   | BLIT                          { BoolLit $1            }
@@ -63,13 +104,11 @@ expr_rule:
   | expr_rule OR expr_rule        { Binop ($1, Or, $3)    }
   | ID ASSIGN expr_rule           { Assign ($1, $3)       }
   | LPAREN expr_rule RPAREN       { $2                    }
-  | CONTINUE                     { Continue              }
-  | BREAK                        { Break                 }
   | NONE                        { None                  }
   | ID LPAREN args_opt RPAREN { Call ($1, $3)  }
-  | LAMBDA args_opt COLON LPAREN stmt_list_rule RPAREN  { Lambda ($2 $5)  }
+  | LAMBDA vdecl COLON LPAREN vdecl_list stmt_list RPAREN  { Lambda ($2, $5, $6)  }
 
-
+/* args_opt*/
 args_opt:
   /*nothing*/ { [] }
   | args { $1 }

@@ -1,19 +1,23 @@
-type bop = Add | Sub | Equal | Neq | Less | Great | Leq | Geq | And | Or
+type bop = Add | Sub | Times | Divide | Mod | Equal | Neq | Leq | Geq | And | Or
 
-type typ = Int | Bool 
+type typ = Int | Bool | String
 
 type expr =
   | Literal of int
   | BoolLit of bool
+  | StringLit of string
   | Id of string
   | Binop of expr * bop * expr
   | Assign of string * expr
+  | Lambda of expr * expr list * expr list
 
 type stmt =
   | Block of stmt list
   | Expr of expr
   | If of expr * stmt * stmt
   | While of expr * stmt
+  | Break
+  | Continue
 
 type bind = typ * string
 
