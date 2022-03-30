@@ -5,11 +5,9 @@ type typ = Int | Bool | String
 type expr =
   | Literal of int
   | BoolLit of bool
-  | StringLit of string
   | Id of string
   | Binop of expr * bop * expr
   | Assign of string * expr
-  | Lambda of expr * expr list * expr list
 
 type stmt =
   | Block of stmt list
@@ -18,14 +16,30 @@ type stmt =
   | While of expr * stmt
   | Break
   | Continue
+  | Return of expr
+
 
 type bind = typ * string
 
-type program = {
+type func_def = {
+  rtyp: typ;
+  fname: string;
+  formals: bind list;
   locals: bind list;
   body: stmt list;
 }
 
+type lambda_def = {
+  rtyp: typ;
+  formals: bind list;
+  locals: bind list;
+  body: expr;
+}
+
+type program = bind list * func_def list * lambda_def list
+
+
+(* 
 let string_of_op = function
     Add -> "+"
   | Sub -> "-"
@@ -62,4 +76,4 @@ let string_of_program fdecl =
   "\n\nParsed program: \n\n" ^
   String.concat "" (List.map string_of_vdecl fdecl.locals) ^
   String.concat "" (List.map string_of_stmt fdecl.body) ^
-  "\n"
+  "\n" *)

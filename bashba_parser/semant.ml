@@ -1,5 +1,11 @@
 (* Semantic checking for the MicroC compiler *)
 
+(* todo:
+remove the check to make sure main function is defined as it's a scripting language
+modify checkfunc so that it works with lambda functions too
+need to figure out how to check and handle lambda functions
+*)
+
 open Ast
 open Sast
 
@@ -32,8 +38,17 @@ let check (globals, functions) =
       fname = "print";
       formals = [(Int, "x")];
       locals = []; body = [] } StringMap.empty
-  in
-
+    StringMap.add "read" {
+      rtyp = String;
+      fname = "read";
+      formals = [];
+      locals = []; body = [] } built_in_decls
+    StringMap.add "list" {
+      rtyp = Int;
+      fname = "list";
+      formals = [(Int, "x")];
+      locals = []; body = [] } built_in_decls
+    in
   (* Add function name to symbol table *)
   let add_func map fd =
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
@@ -56,7 +71,6 @@ let check (globals, functions) =
     with Not_found -> raise (Failure ("unrecognized function " ^ s))
   in
 
-  let _ = find_func "main" in (* Ensure "main" is defined *)
 
   let check_func func =
     (* Make sure no formals or locals are void or duplicates *)

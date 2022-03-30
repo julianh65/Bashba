@@ -1,9 +1,11 @@
+// compile with ocamlyacc parser.mly
+
 %{
 open Ast
 %}
 
 %token PLUS MINUS TIMES DIVIDE MOD LBRACE RBRACE LPAREN RPAREN
-%token COMMA SEMI AND OR NOT EQ LTEQ GTEQ NEQ GT LT ASSIGN COLON
+%token COMMA SEMI AND OR NOT EQ LEQ GEQ NEQ GT LT ASSIGN COLON
 %token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE DEF
 %token BOOL INT STRING NONE
 %token <bool> BLIT
@@ -22,7 +24,7 @@ open Ast
 %%
 
 /* add function declarations*/
-program:
+prog_rules:
   decls EOF { $1}
 
 decls:
@@ -55,13 +57,13 @@ fdecl:
       body= $7
     }
   }
-  | LAMBDA vdecl COLON LPAREN vdecl_list stmt_list RPAREN
+  | vdecl LAMBDA formals_opt COLON LPAREN vdecl_list stmt_list RPAREN
   { {
-    rypt = fst $3;
+    rypt = fst $1;
     fname = "";
     formals = $3;
-    locals = $7;
-    body = $8
+    locals = $6;
+    body = $7
   }}
 
 /* formals_opt */
@@ -80,11 +82,11 @@ stmt_list:
   | stmt stmt_list  { $1::$2 }
 
 stmt:
-    expr SEMI                               { Expr $1      }
+    expr_rule SEMI                               { Expr $1      }
   | LBRACE stmt_list RBRACE                 { Block $2 }
-  | IF LPAREN expr RPAREN stmt ELSE stmt    { If($3, $5, $7) }
-  | WHILE LPAREN expr RPAREN stmt           { While ($3, $5)  }
-  | RETURN expr SEMI                        { Return $2      }
+  | IF LPAREN expr_rule RPAREN stmt ELSE stmt    { If($3, $5, $7) }
+  | WHILE LPAREN expr_rule RPAREN stmt           { While ($3, $5)  }
+  | RETURN expr_rule SEMI                        { Return $2      }
   | BREAK                                   { Break }
   | CONTINUE                                { Continue }
 
@@ -114,5 +116,5 @@ args_opt:
   | args { $1 }
 
 args:
-  expr  { [$1] }
-  | expr COMMA args { $1::$3 }
+  expr_rule  { [$1] }
+  | expr_rule COMMA args { $1::$3 }
