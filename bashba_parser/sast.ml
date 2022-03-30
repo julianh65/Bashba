@@ -6,7 +6,7 @@ and sx =
   | SBoolLit of bool
   | SStringLit of string
   | SId of string
-  | SBinop of sexpr * check_bool_expr * sexpr
+  | SBinop of sexpr * bop * sexpr
   | SAssign of string * sexpr
   | SCall of string * sexpr list
   | SLambda of expr * sexpr list * sexpr list

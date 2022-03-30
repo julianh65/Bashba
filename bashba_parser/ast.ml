@@ -29,14 +29,8 @@ type func_def = {
   body: stmt list;
 }
 
-type lambda_def = {
-  rtyp: typ;
-  formals: bind list;
-  locals: bind list;
-  body: expr;
-}
 
-type program = bind list * func_def list * lambda_def list
+type program = bind list * func_def list
 
 
 (* 

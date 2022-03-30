@@ -39,6 +39,13 @@ vdecl_list:
 /* int x */
 vdecl:
   typ ID { ($1, $2) }
+  | typ LAMBDA formals_opt COLON LPAREN vdecl_list stmt_list RPAREN { {
+    rtyp = $1;
+    formals = $3;
+    locals = $6;
+    body = $7;
+  } }
+
 
 typ:
     INT   { Int   }
@@ -57,14 +64,6 @@ fdecl:
       body= $7
     }
   }
-  | vdecl LAMBDA formals_opt COLON LPAREN vdecl_list stmt_list RPAREN
-  { {
-    rypt = fst $1;
-    fname = "";
-    formals = $3;
-    locals = $6;
-    body = $7
-  }}
 
 /* formals_opt */
 formals_opt:
