@@ -1,13 +1,15 @@
 type bop = Add | Sub | Times | Divide | Mod | Equal | Neq | Leq | Geq | And | Or
 
-type typ = Int | Bool | String
+type typ = Int | Bool | String | Lambda
 
 type expr =
   | Literal of int
   | BoolLit of bool
+  | StringLit of string
   | Id of string
   | Binop of expr * bop * expr
   | Assign of string * expr
+  | Lambda of lambda_def
 
 type stmt =
   | Block of stmt list
@@ -20,6 +22,13 @@ type stmt =
 
 
 type bind = typ * string
+
+type lambda_def = {
+  rtypt: typ;
+  formals: bind list;
+  locals: bind list;
+  body: stmt list;
+}
 
 type func_def = {
   rtyp: typ;

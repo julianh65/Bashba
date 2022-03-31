@@ -9,7 +9,7 @@ and sx =
   | SBinop of sexpr * bop * sexpr
   | SAssign of string * sexpr
   | SCall of string * sexpr list
-  | SLambda of expr * sexpr list * sexpr list
+  | SLambda of slambda_def
 
 type sstmt =
     SBlock of sstmt list
@@ -19,6 +19,13 @@ type sstmt =
   | SReturn of sexpr
   | SBreak
   | SContinue
+
+type slambda_def = {
+  srtyp: typ;
+  sformals: bind list;
+  slocals: bind list;
+  sbody: stmt list;
+}
 
 (* func_def: ret_typ fname formals locals body *)
 type sfunc_def = {

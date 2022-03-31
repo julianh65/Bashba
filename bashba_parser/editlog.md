@@ -57,4 +57,20 @@ of the two, I feel as though the second one is more useful, however if we want t
 of our function calls and function definitions so that we can pass in functions as well. This means we're going to have to do more work
 to edit it
 
+### Luke's Notes on Lambda Functions
+
+I made lambda functions their own type, lambda, created as follows
+
+lambda x;
+lambda x = int x, int y -> int : ( body )
+
+Added arrow token to Scanner
+
+Added lambda_def and expr match with Lambda of lambda_def to Ast
+
+Added Lambda to typ and lambda match for vdecl to Parser.mly
+
+Added Lambda(lambda_def) case to check_expr in Semant.ml. To check a lambda function, I just called check_func lambda, since the only difference between
+a lambda and a func is the presence of func.name, which isn't part of check_func. So, it should work. But I'm not sure!
+
 </details>

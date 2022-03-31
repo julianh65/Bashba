@@ -35,8 +35,8 @@ rule token = parse
  | "if"|"elif" { IF } 
  | "else" { ELSE } 
  | ':' { COLON } 
- | "def" { DEF } 
  | "lambda" { LAMBDA } 
+ | "->" { ARROW }
  | "continue" { CONTINUE } 
  | "break" { BREAK } 
  | "none" { NONE }  

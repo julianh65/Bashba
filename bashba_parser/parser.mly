@@ -6,7 +6,7 @@ open Ast
 
 %token PLUS MINUS TIMES DIVIDE MOD LBRACE RBRACE LPAREN RPAREN
 %token COMMA SEMI AND OR NOT EQ LEQ GEQ NEQ GT LT ASSIGN COLON
-%token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE DEF
+%token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE ARROW
 %token BOOL INT STRING NONE
 %token <bool> BLIT
 %token <string> ID
@@ -36,10 +36,10 @@ vdecl_list:
   /*nothing*/ { [] }
   | vdecl SEMI vdecl_list  {  $1 :: $3 }
 
-/* int x */
+/* int x or lambda x = int x, int y -> int : ( expr )*/
 vdecl:
   typ ID { ($1, $2) }
-  | typ LAMBDA formals_opt COLON LPAREN vdecl_list stmt_list RPAREN { {
+  | formals_opt ARROW typ COLON LPAREN vdecl_list stmt_list RPAREN { {
     rtyp = $1;
     formals = $3;
     locals = $6;
@@ -51,6 +51,7 @@ typ:
     INT   { Int   }
   | BOOL  { Bool  }
   | STRING { String }
+  | LAMBDA { Lambda }
 
 /* fdecl */
 fdecl:
@@ -73,8 +74,6 @@ formals_opt:
 formals_list:
   vdecl { [$1] }
   | vdecl COMMA formals_list { $1::$3 }
-  | fdecl { [$1] }
-  | fdecl COMMA formals_list { $1::$3 }
 
 stmt_list:
   /* nothing */ { [] }

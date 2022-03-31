@@ -140,7 +140,8 @@ let check (globals, functions) =
           in
           let args' = List.map2 check_call fd.formals args
           in (fd.rtyp, SCall(fname, args'))
-      (* | Lambda(input, vdecl, stmt) ->  *)
+      | Lambda(lambda_def) as lambda ->
+        let _ = check lambda in SLambda(lambda_def)
     in
 
     let check_bool_expr e =
