@@ -6,7 +6,7 @@ open Ast
 
 %token PLUS MINUS TIMES DIVIDE MOD LBRACE RBRACE LPAREN RPAREN
 %token COMMA SEMI AND OR NOT EQ LEQ GEQ NEQ GT LT ASSIGN COLON
-%token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE ARROW
+%token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE ARROW LAMB
 %token BOOL INT STRING NONE
 %token <bool> BLIT
 %token <string> ID
@@ -36,22 +36,15 @@ vdecl_list:
   /*nothing*/ { [] }
   | vdecl SEMI vdecl_list  {  $1 :: $3 }
 
-/* int x or lambda x = int x, int y -> int : ( expr )*/
+/* int x */
 vdecl:
   typ ID { ($1, $2) }
-  | formals_opt ARROW typ COLON LPAREN vdecl_list stmt_list RPAREN { {
-    rtyp = $1;
-    formals = $3;
-    locals = $6;
-    body = $7;
-  } }
-
 
 typ:
     INT   { Int   }
   | BOOL  { Bool  }
   | STRING { String }
-  | LAMBDA { Lambda }
+  | LAMB { Lamb }
 
 /* fdecl */
 fdecl:
@@ -92,6 +85,13 @@ expr_rule:
   | BLIT                          { BoolLit $1            }
   | LITERAL                       { Literal $1            }
   | ID                            { Id $1                 }
+  // myLamb = lambda int x, int y -> int : ( ) */
+  | LAMBDA formals_opt ARROW typ COLON LPAREN vdecl_list stmt_list RPAREN { Lambda ({
+      rtyp = $2;
+      formals = $4;
+      locals = $7;
+      body = $8;
+    }) }
   | expr_rule PLUS expr_rule      { Binop ($1, Add, $3)   }
   | expr_rule MINUS expr_rule     { Binop ($1, Sub, $3)   }
   | expr_rule EQ expr_rule        { Binop ($1, Equal, $3) }
@@ -106,7 +106,6 @@ expr_rule:
   | LPAREN expr_rule RPAREN       { $2                    }
   | NONE                        { None                  }
   | ID LPAREN args_opt RPAREN { Call ($1, $3)  }
-  | LAMBDA vdecl COLON LPAREN vdecl_list stmt_list RPAREN  { Lambda ($2, $5, $6)  }
 
 /* args_opt*/
 args_opt:

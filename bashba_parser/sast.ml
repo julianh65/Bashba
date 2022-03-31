@@ -10,8 +10,7 @@ and sx =
   | SAssign of string * sexpr
   | SCall of string * sexpr list
   | SLambda of slambda_def
-
-type sstmt =
+and sstmt =
     SBlock of sstmt list
   | SExpr of sexpr
   | SIf of sexpr * sstmt * sstmt
@@ -19,8 +18,7 @@ type sstmt =
   | SReturn of sexpr
   | SBreak
   | SContinue
-
-type slambda_def = {
+and slambda_def = {
   srtyp: typ;
   sformals: bind list;
   slocals: bind list;

@@ -2,6 +2,8 @@ type bop = Add | Sub | Times | Divide | Mod | Equal | Neq | Leq | Geq | And | Or
 
 type typ = Int | Bool | String | Lambda
 
+type bind = typ * string
+
 type expr =
   | Literal of int
   | BoolLit of bool
@@ -10,8 +12,7 @@ type expr =
   | Binop of expr * bop * expr
   | Assign of string * expr
   | Lambda of lambda_def
-
-type stmt =
+and stmt =
   | Block of stmt list
   | Expr of expr
   | If of expr * stmt * stmt
@@ -19,16 +20,13 @@ type stmt =
   | Break
   | Continue
   | Return of expr
-
-
-type bind = typ * string
-
-type lambda_def = {
+and lambda_def = {
   rtypt: typ;
   formals: bind list;
   locals: bind list;
   body: stmt list;
 }
+
 
 type func_def = {
   rtyp: typ;
@@ -37,7 +35,6 @@ type func_def = {
   locals: bind list;
   body: stmt list;
 }
-
 
 type program = bind list * func_def list
 
