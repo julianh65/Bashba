@@ -1,6 +1,6 @@
-type bop = Add | Sub | Times | Divide | Mod | Equal | Neq | Leq | Geq | And | Or
+type bop = Add | Sub | Times | Divide | Mod | Equal | Neq | Leq | Geq | Less | Great | And | Or
 
-type typ = Int | Bool | String | Lambda
+type typ = Int | Bool | String | Lamb | None
 
 type bind = typ * string
 
@@ -11,7 +11,9 @@ type expr =
   | Id of string
   | Binop of expr * bop * expr
   | Assign of string * expr
-  | Lambda of lambda_def
+  | Call of string * expr list
+  | Lamb of lamb_def
+  | None
 and stmt =
   | Block of stmt list
   | Expr of expr
@@ -20,13 +22,12 @@ and stmt =
   | Break
   | Continue
   | Return of expr
-and lambda_def = {
-  rtypt: typ;
+and lamb_def = {
+  rtyp: typ;
   formals: bind list;
   locals: bind list;
   body: stmt list;
 }
-
 
 type func_def = {
   rtyp: typ;
@@ -37,26 +38,37 @@ type func_def = {
 }
 
 type program = bind list * func_def list
+(* type program = {
+  globals: bind list;
+  funcs: func_def list;
+} *)
 
-
-(* 
 let string_of_op = function
     Add -> "+"
   | Sub -> "-"
+  | Times -> "*"
+  | Divide -> "/"
+  | Mod -> "%"
   | Equal -> "=="
   | Neq -> "!="
+  | Leq -> "<="
+  | Geq -> ">="
   | Less -> "<"
+  | Great -> ">"
   | And -> "&&"
   | Or -> "||"
-
 let rec string_of_expr = function
-    Literal(l) -> string_of_int l
-  | BoolLit(true) -> "true"
-  | BoolLit(false) -> "false"
-  | Id(s) -> s
-  | Binop(e1, o, e2) ->
-    string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
-  | Assign(v, e) -> v ^ " = " ^ string_of_expr e
+  Literal(l) -> string_of_int l
+| BoolLit(true) -> "true"
+| BoolLit(false) -> "false"
+| StringLit(s) -> s
+| Id(s) -> s
+| Binop(e1, o, e2) ->
+  string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
+| Assign(v, e) -> v ^ " = " ^ string_of_expr e
+| Call(s, l) -> "(" ^ s ^ ")\n"
+| Lamb(s) -> "lambda func"
+| None -> "None"
 
 let rec string_of_stmt = function
     Block(stmts) ->
@@ -65,15 +77,30 @@ let rec string_of_stmt = function
   | If(e, s1, s2) ->  "if (" ^ string_of_expr e ^ ")\n" ^
                       string_of_stmt s1 ^ "else\n" ^ string_of_stmt s2
   | While(e, s) -> "while (" ^ string_of_expr e ^ ") " ^ string_of_stmt s
+  | Break -> "Break\n"
+  | Continue -> "Continue\n"
+  | Return(e) -> "return " ^ string_of_expr e ^ "\n"
 
 let string_of_typ = function
     Int -> "int"
   | Bool -> "bool"
+  | String -> "String"
+  | Lamb -> "lamb"
+  | None -> "None"
+
+let string_of_bind (t, id) = string_of_typ t ^ " " ^ id
 
 let string_of_vdecl (t, id) = string_of_typ t ^ " " ^ id ^ ";\n"
 
-let string_of_program fdecl =
+let string_of_func func = 
+  "" ^ (string_of_typ func.rtyp) ^ " " ^ func.fname ^ "(" ^
+  String.concat "," (List.map string_of_bind func.formals) ^ ") {\n" ^
+  String.concat "" (List.map string_of_vdecl func.locals) ^ 
+  String.concat "" (List.map string_of_stmt func.body) ^
+  "}\n"
+
+let string_of_program prog =
   "\n\nParsed program: \n\n" ^
-  String.concat "" (List.map string_of_vdecl fdecl.locals) ^
-  String.concat "" (List.map string_of_stmt fdecl.body) ^
-  "\n" *)
+  String.concat "" (List.map string_of_vdecl (fst prog)) ^
+  String.concat "" (List.map string_of_func (snd prog)) ^
+  "\n"

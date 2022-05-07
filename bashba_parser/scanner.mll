@@ -3,6 +3,8 @@
 
 let dig = ['0'-'9']
 let lit = ['a'-'z' 'A'-'Z']
+let quote = "\""
+let string_lit = quote (dig|lit|" ")* quote
 
 rule token = parse 
  ['\n' '\t' '\r' ' '] {token lexbuf} 
@@ -36,7 +38,6 @@ rule token = parse
  | "else" { ELSE } 
  | ':' { COLON } 
  | "lamb" { LAMB } 
- | "lambda" { LAMBDA }
  | "->" { ARROW }
  | "continue" { CONTINUE } 
  | "break" { BREAK } 
@@ -44,10 +45,11 @@ rule token = parse
  | "int" { INT } 
  | "bool" { BOOL } 
  | "String" { STRING } 
- | dig+ as d { LIT(int_of_string d) }
+ | string_lit as s { STRINGLIT(s) }
+ | dig+ as d { LITERAL(int_of_string d) }
  | lit ( dig | lit | '_')* as d {ID(d)}
  | eof { EOF } 
- | _ as c { raise (Failure("illegal character " ^ Char.escaped char)) } 
+ | _ as c { raise (Failure("illegal character " ^ Char.escaped c)) } 
 and comment = parse 
 '\n' { token lexbuf }
 | _ { comment lexbuf }

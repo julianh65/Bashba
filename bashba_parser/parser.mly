@@ -10,10 +10,11 @@ open Ast
 %token BOOL INT STRING NONE
 %token <bool> BLIT
 %token <string> ID
+%token <string> STRINGLIT
 %token <int> LITERAL
 
 %start prog_rules 
-%type <Ast.prog> prog_rules
+%type <Ast.program> prog_rules
 
 %right ASSIGN
 %left OR AND NOT
@@ -74,21 +75,22 @@ stmt_list:
 
 stmt:
     expr_rule SEMI                               { Expr $1      }
-  | LBRACE stmt_list RBRACE                 { Block $2 }
+  | LBRACE stmt_list RBRACE                      { Block $2 }
   | IF LPAREN expr_rule RPAREN stmt ELSE stmt    { If($3, $5, $7) }
   | WHILE LPAREN expr_rule RPAREN stmt           { While ($3, $5)  }
   | RETURN expr_rule SEMI                        { Return $2      }
-  | BREAK                                   { Break }
-  | CONTINUE                                { Continue }
+  | BREAK                                        { Break }
+  | CONTINUE                                     { Continue }
 
 expr_rule:
   | BLIT                          { BoolLit $1            }
   | LITERAL                       { Literal $1            }
+  | STRINGLIT                     { StringLit $1          }
   | ID                            { Id $1                 }
-  // myLamb = lambda int x, int y -> int : ( ) */
-  | LAMBDA formals_opt ARROW typ COLON LPAREN vdecl_list stmt_list RPAREN { Lambda ({
-      rtyp = $2;
-      formals = $4;
+  // myLamb = int x, int y -> int : ( ) */
+  | LAMB formals_opt ARROW typ COLON LPAREN vdecl_list stmt_list RPAREN { Lamb ({
+      rtyp = $4;
+      formals = $2;
       locals = $7;
       body = $8;
     }) }

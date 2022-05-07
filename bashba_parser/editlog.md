@@ -61,8 +61,8 @@ to edit it
 
 I made lambda functions their own type, lambda, created as follows
 
-lambda x;
-lambda x = int x, int y -> int : ( body )
+lamb x;
+lamb x = int x, int y -> int : ( body )
 
 Added arrow token to Scanner
 
@@ -72,5 +72,23 @@ Added Lambda to typ and lambda match for vdecl to Parser.mly
 
 Added Lambda(lambda_def) case to check_expr in Semant.ml. To check a lambda function, I just called check_func lambda, since the only difference between
 a lambda and a func is the presence of func.name, which isn't part of check_func. So, it should work. But I'm not sure!
+
+### How to compile, run, etc.
+
+# Scan Testing
+in scan_test folder:
+
+ocamlbuild scan_test.native
+
+./scan_test
+
+
+# Parse Testing
+
+in main folder:
+
+ocamlbuild parser_test.native
+./parser_test
+
 
 </details>
