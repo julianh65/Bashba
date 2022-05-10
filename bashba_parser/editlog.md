@@ -76,12 +76,12 @@ a lambda and a func is the presence of func.name, which isn't part of check_func
 ### How to compile, run, etc.
 
 # Scan Testing
-in scan_test folder:
 
-ocamlbuild scan_test.native
+~~in scan_test folder:~~
 
-./scan_test
+~~ocamlbuild scan_test.native~~
 
+~~./scan_test~~
 
 # Parse Testing
 
@@ -90,5 +90,14 @@ in main folder:
 ocamlbuild parser_test.native
 ./parser_test
 
+# Julian's Updates
+
+## Scan Testing
+
+in main folder:
+
+ocamlbuild scantest.native
+
+./scantest.native
 
 </details>
