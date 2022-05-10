@@ -38,10 +38,6 @@ type func_def = {
 }
 
 type program = bind list * func_def list
-(* type program = {
-  globals: bind list;
-  funcs: func_def list;
-} *)
 
 let string_of_op = function
     Add -> "+"

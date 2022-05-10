@@ -4,8 +4,8 @@
 open Ast
 %}
 
-%token PLUS MINUS TIMES DIVIDE MOD LBRACE RBRACE LPAREN RPAREN
-%token COMMA SEMI AND OR NOT EQ LEQ GEQ NEQ GT LT ASSIGN COLON
+%token SEMI PLUS MINUS TIMES DIVIDE MOD LBRACE RBRACE LPAREN RPAREN
+%token COMMA AND OR NOT EQ LEQ GEQ NEQ GT LT ASSIGN COLON
 %token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE ARROW LAMB
 %token BOOL INT STRING NONE
 %token <bool> BLIT
@@ -106,8 +106,8 @@ expr_rule:
   | expr_rule OR expr_rule        { Binop ($1, Or, $3)    }
   | ID ASSIGN expr_rule           { Assign ($1, $3)       }
   | LPAREN expr_rule RPAREN       { $2                    }
-  | NONE                        { None                  }
-  | ID LPAREN args_opt RPAREN { Call ($1, $3)  }
+  | NONE                          { None                  }
+  | ID LPAREN args_opt RPAREN     { Call ($1, $3)  }
 
 /* args_opt*/
 args_opt:

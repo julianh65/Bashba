@@ -38,7 +38,7 @@ let check (globals, functions) =
       fname = "print";
       formals = [(Int, "x")];
       locals = []; body = [] } StringMap.empty
-    StringMap.add "read" {
+    (* StringMap.add "read" {
       rtyp = String;
       fname = "read";
       formals = [];
@@ -47,7 +47,7 @@ let check (globals, functions) =
       rtyp = Int;
       fname = "list";
       formals = [(Int, "x")];
-      locals = []; body = [] } built_in_decls
+      locals = []; body = [] } built_in_decls *)
     in
   (* Add function name to symbol table *)
   let add_func map fd =
@@ -126,6 +126,8 @@ let check (globals, functions) =
           in
           (t, SBinop((t1, e1'), op, (t2, e2')))
         else raise (Failure err)
+      | None -> (None, SNone)
+      (* | Lamb(s) -> (Lamb, SLamb s) *)
       | Call(fname, args) as call ->
         let fd = find_func fname in
         let param_length = List.length fd.formals in
@@ -140,9 +142,7 @@ let check (globals, functions) =
           in
           let args' = List.map2 check_call fd.formals args
           in (fd.rtyp, SCall(fname, args'))
-      | Lambda(lambda_def) as lambda ->
-        let _ = check lambda in SLamb(lambda_def)
-    in
+        in
 
     let check_bool_expr e =
       let (t, e') = check_expr e in
