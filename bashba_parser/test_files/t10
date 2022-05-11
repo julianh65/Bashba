@@ -1,0 +1,13 @@
+int j;
+int main()
+{
+    while (j < 10)
+    {
+        j = j + 1;
+        if (j == 5)
+        {
+            break;
+        }
+    }
+    return 0;
+}

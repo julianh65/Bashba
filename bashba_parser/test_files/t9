@@ -1,0 +1,11 @@
+int f1(int j)
+{
+    return j + 1;
+}
+
+int main()
+{
+    int dobrovic = 4;
+    int a = f1(dobrovic);
+    return 0;
+}
