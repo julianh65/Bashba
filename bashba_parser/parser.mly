@@ -74,13 +74,13 @@ stmt_list:
   | stmt stmt_list  { $1::$2 }
 
 stmt:
-    expr_rule SEMI                               { Expr $1      }
-  | LBRACE stmt_list RBRACE                      { Block $2 }
-  | IF LPAREN expr_rule RPAREN stmt ELSE stmt    { If($3, $5, $7) }
-  | WHILE LPAREN expr_rule RPAREN stmt           { While ($3, $5)  }
-  | RETURN expr_rule SEMI                        { Return $2      }
-  | BREAK                                        { Break }
-  | CONTINUE                                     { Continue }
+    expr_rule SEMI                                                          { Expr $1      }
+  | LBRACE stmt_list RBRACE                                                 { Block $2 }
+  | IF LPAREN expr_rule RPAREN LBRACE stmt RBRACE ELSE LBRACE stmt RBRACE    { If($3, $6, $10) }
+  | WHILE LPAREN expr_rule RPAREN stmt                                      { While ($3, $5)  }
+  | RETURN expr_rule SEMI                                                   { Return $2      }
+  | BREAK                                                                   { Break }
+  | CONTINUE                                                                { Continue }
 
 expr_rule:
   | BLIT                          { BoolLit $1            }
