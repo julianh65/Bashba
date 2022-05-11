@@ -80,8 +80,8 @@ stmt:
   | IF LPAREN expr_rule RPAREN LBRACE stmt_list RBRACE                                    { If($3, $6)          }
   | WHILE LPAREN expr_rule RPAREN stmt_list                                               { While ($3, $5)      }
   | RETURN expr_rule SEMI                                                                 { Return $2           }
-  | BREAK                                                                                 { Break               }
-  | CONTINUE                                                                              { Continue            }
+  | BREAK SEMI                                                                            { Break               }
+  | CONTINUE SEMI                                                                         { Continue            }
 
 expr_rule:
   | BLIT                          { BoolLit $1            }

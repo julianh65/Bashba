@@ -8,6 +8,10 @@ int main()
         {
             break;
         }
+        if (j == 645)
+        {
+            continue;
+        }
     }
     return 0;
 }
