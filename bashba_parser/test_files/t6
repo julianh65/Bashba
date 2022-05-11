@@ -1,7 +1,10 @@
 int a;
 int b;
-if (a == b)
+int main()
 {
-    a = a + b;
-    b = 1;
+    if (a == b)
+    {
+        a = a + b;
+        b = 1;
+    }
 }

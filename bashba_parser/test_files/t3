@@ -1,3 +1,6 @@
 int j;
-j = 15;
-##this is a comment
+int main()
+{
+    j = 15;
+    ##this is a comment
+}

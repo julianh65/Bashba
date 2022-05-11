@@ -8,7 +8,7 @@ os.system("rm scantest.native")
 print("Building scanner...")
 os.system("ocamlbuild scantest.native")
 
-for i in range(1, 10):
+for i in range(1, 9):
     print("Testing case " + str(i))
     if("error" in subprocess.getoutput(
             "./scantest.native < ./test_files/t{}".format(i))):
