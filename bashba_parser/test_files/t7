@@ -1,0 +1,5 @@
+int function(int j)
+{
+    int b = 34;
+    return j;
+}

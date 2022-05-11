@@ -1,5 +1,9 @@
 # EDIT LOG
 
+## TODO
+
+There are 3 shift reduce conflicts in our scanner
+
 <details>
 <summary>Julian - Mar 30</summary>
 
