@@ -32,6 +32,7 @@ decls:
    /* nothing */ { ([], [])               }
  | vdecl SEMI decls { (($1 :: fst $3), snd $3) }
  | fdecl decls { (fst $2, ($1 :: snd $2)) }
+ | lambdadecl decls { (fst $2, ($1 :: snd $2)) }
 
 vdecl_list:
   /*nothing*/ { [] }
@@ -59,6 +60,21 @@ fdecl:
       body= $7
     }
   }
+// lambdas declared as
+// lamb mylambda = int x, int y->int : (x + y)
+
+lambdadecl:
+  LAMB ID ASSIGN formals_opt ARROW typ COLON LPAREN stmt_list RPAREN
+  {
+    {
+      rtyp=$5;
+      fname=$2;
+      formals=$4;
+      locals=[];
+      body=$8
+    }
+  }
+  
 
 /* formals_opt */
 formals_opt:
@@ -88,13 +104,6 @@ expr_rule:
   | LITERAL                       { Literal $1            }
   | STRINGLIT                     { StringLit $1          }
   | ID                            { Id $1                 }
-  // myLamb = int x, int y -> int : ( ) */
-  | LAMB formals_opt ARROW typ COLON LPAREN vdecl_list stmt_list RPAREN { Lamb ({
-      rtyp = $4;
-      formals = $2;
-      locals = $7;
-      body = $8;
-    }) }
   | expr_rule PLUS expr_rule      { Binop ($1, Add, $3)   }
   | expr_rule MINUS expr_rule     { Binop ($1, Sub, $3)   }
   | expr_rule EQ expr_rule        { Binop ($1, Equal, $3) }
