@@ -1,4 +1,4 @@
-(* compile with $ocammlex scanner.mll *)
+(* compile with $ocamllex scanner.mll *)
 { open Parser }
 
 let dig = ['0'-'9']

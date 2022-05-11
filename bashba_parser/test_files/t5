@@ -1,1 +1,2 @@
-String str = "hello world, 15";
+String str;
+str = "hello world, 15";

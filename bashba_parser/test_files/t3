@@ -1,2 +1,3 @@
-int j = 15;
+int j;
+j = 15;
 ##this is a comment

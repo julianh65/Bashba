@@ -1,2 +1,2 @@
-int j = 2;
-int b = 34;
+int j;
+j = 2;

@@ -1,1 +1,2 @@
-bool b1 = True;
+bool b1;
+b1 = True;
