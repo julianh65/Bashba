@@ -1,6 +1,6 @@
 type bop = Add | Sub | Times | Divide | Mod | Equal | Neq | Leq | Geq | Less | Great | And | Or
 
-type typ = Int | Bool | String | Lamb | None
+type typ = Int | Bool | String | Lamb | IntArray | StringArray | None
 
 type bind = typ * string
 
@@ -13,6 +13,8 @@ type expr =
   | Assign of string * expr
   | Call of string * expr list
   | Lamb of lamb_def
+  | IntArray of int list
+  | StringArray of string list
   | None
 and stmt =
   | Block of stmt list
@@ -25,6 +27,7 @@ and stmt =
   | Return of expr
 and lamb_def = {
   rtyp: typ;
+  fname: string;
   formals: bind list;
   locals: bind list;
   body: stmt list;
@@ -65,6 +68,8 @@ let rec string_of_expr = function
 | Assign(v, e) -> v ^ " = " ^ string_of_expr e
 | Call(s, l) -> "(" ^ s ^ ")\n"
 | Lamb(s) -> "lambda func"
+| IntArray(s) -> "int array"
+| StringArray(s) -> "string array"
 | None -> "None"
 
 let rec string_of_stmt = function
@@ -85,6 +90,8 @@ let string_of_typ = function
   | Bool -> "bool"
   | String -> "String"
   | Lamb -> "lamb"
+  | IntArray -> "int[]"
+  | StringArray -> "String[]"
   | None -> "None"
 
 let string_of_bind (t, id) = string_of_typ t ^ " " ^ id
