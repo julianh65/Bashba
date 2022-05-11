@@ -1,5 +1,5 @@
 String str;
 int main()
 {
-    str = "hello world, 15";
+    str = "hello world, 15!";
 }
