@@ -1,11 +1,14 @@
-int f1(int j)
+int fib(int x)
 {
-    return j + 1;
+    if (x < 2)
+    {
+        return 1;
+    }
+    return fib(x - 1) + fib(x - 2);
 }
 
 int main()
 {
-    int dobrovic = 4;
-    int a = f1(dobrovic);
+    fib(0);
     return 0;
 }
