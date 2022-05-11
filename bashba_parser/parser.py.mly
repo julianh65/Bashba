@@ -68,3 +68,5 @@ expr_rule:
   | expr_rule OR expr_rule        { Binop ($1, Or, $3)    }
   | ID ASSIGN expr_rule           { Assign ($1, $3)       }
   | LPAREN expr_rule RPAREN       { $2                    }
+  | ID LPAREN vdecl_list_rule RPAREN { Call($1, $3)  }
+
