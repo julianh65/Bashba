@@ -1,5 +1,6 @@
 int main(int j)
 {
-    int b = 34;
+    int b;
+    b = 34;
     return j;
 }

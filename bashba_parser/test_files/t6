@@ -5,6 +5,8 @@ int main()
     if (a == b)
     {
         a = a + b;
-        b = 1;
+    } else {
+        b = 2;
+        a = a + b;
     }
 }

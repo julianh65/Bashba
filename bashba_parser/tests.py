@@ -14,3 +14,6 @@ for i in range(1, 11):
         print("Test case " + str(i) + " ❌ failed")
     else:
         print("Test case " + str(i) + " ✅ passed!")
+
+dir = os.getcwd()
+print(open(dir + '/test_files/test_guide.txt', 'r').read())
