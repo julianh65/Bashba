@@ -1,11 +1,3 @@
-(* Semantic checking for the MicroC compiler *)
-
-(* todo:
-remove the check to make sure main function is defined as it's a scripting language
-modify checkfunc so that it works with lambda functions too
-need to figure out how to check and handle lambda functions
-*)
-
 open Ast
 open Sast
 
@@ -38,17 +30,8 @@ let check (globals, functions) =
       fname = "print";
       formals = [(Int, "x")];
       locals = []; body = [] } StringMap.empty
-    (* StringMap.add "read" {
-      rtyp = String;
-      fname = "read";
-      formals = [];
-      locals = []; body = [] } built_in_decls
-    StringMap.add "list" {
-      rtyp = Int;
-      fname = "list";
-      formals = [(Int, "x")];
-      locals = []; body = [] } built_in_decls *)
-    in
+  in
+
   (* Add function name to symbol table *)
   let add_func map fd =
     let built_in_err = "function " ^ fd.fname ^ " may not be defined"
@@ -70,6 +53,8 @@ let check (globals, functions) =
     try StringMap.find s function_decls
     with Not_found -> raise (Failure ("unrecognized function " ^ s))
   in
+
+  let _ = find_func "main" in (* Ensure "main" is defined *)
 
   let check_func func =
     (* Make sure no formals or locals are void or duplicates *)
@@ -97,7 +82,6 @@ let check (globals, functions) =
     let rec check_expr = function
         Literal l -> (Int, SLiteral l)
       | BoolLit l -> (Bool, SBoolLit l)
-      | StringLit l -> (String, SStringLit l)
       | Id var -> (type_of_identifier var, SId var)
       | Assign(var, e) as ex ->
         let lt = type_of_identifier var
@@ -118,16 +102,14 @@ let check (globals, functions) =
         if t1 = t2 then
           (* Determine expression type based on operator and operand types *)
           let t = match op with
-              Add | Sub | Times | Divide | Mod when t1 = Int -> Int
+              Add | Sub when t1 = Int -> Int
             | Equal | Neq -> Bool
-            | Leq | Geq when t1 = Int -> Bool
+            | Less when t1 = Int -> Bool
             | And | Or when t1 = Bool -> Bool
             | _ -> raise (Failure err)
           in
           (t, SBinop((t1, e1'), op, (t2, e2')))
         else raise (Failure err)
-      | None -> (None, SNone)
-      (* | Lamb(s) -> (Lamb, SLamb s) *)
       | Call(fname, args) as call ->
         let fd = find_func fname in
         let param_length = List.length fd.formals in
@@ -142,7 +124,7 @@ let check (globals, functions) =
           in
           let args' = List.map2 check_call fd.formals args
           in (fd.rtyp, SCall(fname, args'))
-        in
+    in
 
     let check_bool_expr e =
       let (t, e') = check_expr e in
@@ -161,8 +143,6 @@ let check (globals, functions) =
          follows any Return statement.  Nested blocks are flattened. *)
         Block sl -> SBlock (check_stmt_list sl)
       | Expr e -> SExpr (check_expr e)
-      | Break -> SBreak
-      | Continue -> SContinue
       | If(e, st1, st2) ->
         SIf(check_bool_expr e, check_stmt st1, check_stmt st2)
       | While(e, st) ->
