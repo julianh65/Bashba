@@ -29,7 +29,8 @@ let check (globals, functions) =
       rtyp = Int;
       fname = "print";
       formals = [(Int, "x")];
-      locals = []; body = [] } StringMap.empty
+      locals = []; 
+      body = []; } StringMap.empty
   in
 
   (* Add function name to symbol table *)
@@ -82,9 +83,14 @@ let check (globals, functions) =
     let rec check_expr = function
         Literal l -> (Int, SLiteral l)
       | BoolLit l -> (Bool, SBoolLit l)
-      | StringLit l -> (String, SLiteral l)
+      | StringLit l -> (String, SStringLit l)
+      | None -> (None, SNone)
       (*need to fix lambda functions here*)
-      | Lamb l -> ()
+      (* | Lamb l -> (let this_slamb = { 
+        srtyp: Int; 
+        sformals: ""; 
+        slocals: ""; 
+        sbody: check_stmt_list l.body;}) in (Lamb, Slamb this_slamb) *)
       | Id var -> (type_of_identifier var, SId var)
       | Assign(var, e) as ex ->
         let lt = type_of_identifier var
@@ -146,10 +152,13 @@ let check (globals, functions) =
          follows any Return statement.  Nested blocks are flattened. *)
         Block sl -> SBlock (check_stmt_list sl)
       | Expr e -> SExpr (check_expr e)
-      | If(e, st1, st2) ->
-        SIf(check_bool_expr e, check_stmt st1, check_stmt st2)
+      | If(e, st1) -> SIf(check_bool_expr e, check_stmt_list st1)
+      | IfElse(e, st1, st2) ->
+        SIfElse(check_bool_expr e, check_stmt_list st1, check_stmt_list st2)
       | While(e, st) ->
-        SWhile(check_bool_expr e, check_stmt st)
+        SWhile(check_bool_expr e, check_stmt_list st)
+      | Break -> SBreak
+      | Continue -> SContinue
       | Return e ->
         let (t, e') = check_expr e in
         if t = func.rtyp then SReturn (t, e')

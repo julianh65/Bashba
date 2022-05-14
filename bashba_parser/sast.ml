@@ -14,15 +14,16 @@ and sx =
 and sstmt =
     SBlock of sstmt list
   | SExpr of sexpr
-  | SIf of sexpr * sstmt * sstmt
-  | SWhile of sexpr * sstmt
+  | SIfElse of sexpr * sstmt list * sstmt list
+  | SIf of sexpr * sstmt list
+  | SWhile of sexpr * sstmt list
   | SReturn of sexpr
   | SBreak
   | SContinue
 and slamb_def = {
   srtyp: typ;
+  slambname : string;
   sformals: bind list;
-  slocals: bind list;
   sbody: stmt list;
 }
 
@@ -58,9 +59,13 @@ let rec string_of_sstmt = function
     "{\n" ^ String.concat "" (List.map string_of_sstmt stmts) ^ "}\n"
   | SExpr(expr) -> string_of_sexpr expr ^ ";\n"
   | SReturn(expr) -> "return " ^ string_of_sexpr expr ^ ";\n"
-  | SIf(e, s1, s2) ->  "if (" ^ string_of_sexpr e ^ ")\n" ^
-                       string_of_sstmt s1 ^ "else\n" ^ string_of_sstmt s2
-  | SWhile(e, s) -> "while (" ^ string_of_sexpr e ^ ") " ^ string_of_sstmt s
+  | SIf(e, s1) -> "if (" ^ string_of_sexpr e ^ ") {\n" ^ 
+      String.concat "" (List.map string_of_sstmt s1) ^ "\n }\n"
+  | SIfElse(e, s1, s2) ->  "if (" ^ string_of_sexpr e ^ ") {\n" ^
+                       String.concat "" (List.map string_of_sstmt s1) ^ "else{ \n" ^ 
+                        String.concat "" (List.map string_of_sstmt s2) ^ "\n}\n"
+  | SWhile(e, s) -> "while (" ^ string_of_sexpr e ^ ") " ^ 
+      String.concat "" (List.map string_of_sstmt s)
   | SBreak -> "Break; \n"
   | SContinue -> "Continue; \n"
 

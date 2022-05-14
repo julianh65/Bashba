@@ -32,13 +32,12 @@ decls:
    /* nothing */ { ([], [])               }
  | vdecl SEMI decls { (($1 :: fst $3), snd $3) }
  | fdecl decls { (fst $2, ($1 :: snd $2)) }
- | lambdadecl decls { (fst $2, ($1 :: snd $2)) }
+//  | lambdadecl decls { (fst $2, ($1 :: snd $2)) }
 
 vdecl_list:
   /*nothing*/ { [] }
   | vdecl SEMI vdecl_list  {  $1 :: $3 }
 
-/* int x */
 vdecl:
   typ ID { ($1, $2) }
 
@@ -56,24 +55,11 @@ fdecl:
       rtyp=fst $1;
       fname=snd $1;
       formals= $3;
-      locals= $6;
+      locals = $6;
       body= $7
     }
   }
-// lambdas declared as
-// lamb mylambda = int x, int y->int : (x + y)
 
-lambdadecl:
-  LAMB ID ASSIGN formals_opt ARROW typ COLON LPAREN stmt_list RPAREN
-  {
-    {
-      rtyp=$6;
-      fname=$2;
-      formals=$4;
-      body=$9;
-    }
-  }
-  
 
 /* formals_opt */
 formals_opt:
@@ -109,14 +95,23 @@ expr_rule:
   | expr_rule NEQ expr_rule       { Binop ($1, Neq, $3)   }
   | expr_rule LT expr_rule        { Binop ($1, Less, $3)  }
   | expr_rule GT expr_rule        { Binop ($1, Great, $3) }
-  | expr_rule LTEQ expr_rule      { Binop ($1, Leq, $3)  }
-  | expr_rule GTEQ expr_rule      { Binop ($1, Geq, $3)  }
+  | expr_rule LTEQ expr_rule      { Binop ($1, Leq, $3)   }
+  | expr_rule GTEQ expr_rule      { Binop ($1, Geq, $3)   }
   | expr_rule AND expr_rule       { Binop ($1, And, $3)   }
   | expr_rule OR expr_rule        { Binop ($1, Or, $3)    }
   | ID ASSIGN expr_rule           { Assign ($1, $3)       }
   | LPAREN expr_rule RPAREN       { $2                    }
   | NONE                          { None                  }
   | ID LPAREN args_opt RPAREN     { Call ($1, $3)  }
+  /* x = int x, int y -> int : (body) */
+  | formals_opt ARROW typ COLON LPAREN stmt_list RPAREN { Lamb (
+    {
+      rtyp=$3;
+      lambname="";
+      formals=$1;
+      body=$6;
+    })
+  }
 
 /* args_opt*/
 args_opt:
