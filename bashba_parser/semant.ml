@@ -82,6 +82,9 @@ let check (globals, functions) =
     let rec check_expr = function
         Literal l -> (Int, SLiteral l)
       | BoolLit l -> (Bool, SBoolLit l)
+      | StringLit l -> (String, SLiteral l)
+      (*need to fix lambda functions here*)
+      | Lamb l -> ()
       | Id var -> (type_of_identifier var, SId var)
       | Assign(var, e) as ex ->
         let lt = type_of_identifier var

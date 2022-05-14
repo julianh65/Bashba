@@ -67,11 +67,10 @@ lambdadecl:
   LAMB ID ASSIGN formals_opt ARROW typ COLON LPAREN stmt_list RPAREN
   {
     {
-      rtyp=$5;
+      rtyp=$6;
       fname=$2;
       formals=$4;
-      locals=[];
-      body=$8
+      body=$9;
     }
   }
   
