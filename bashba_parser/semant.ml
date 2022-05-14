@@ -82,7 +82,7 @@ let check (globals, functions) =
     (* Return a semantically-checked expression, i.e., with a type *)
     let rec check_expr = function
         Literal l -> (Int, SLiteral l)
-      | BoolLit l -> (Bool, SBoolLit l)
+      | BoolLit l -> let _ = print_endline "BOOL" in (Bool, SBoolLit l)
       | StringLit l -> (String, SStringLit l)
       | None -> (None, SNone)
       (*need to fix lambda functions here*)
@@ -110,6 +110,7 @@ let check (globals, functions) =
         (* All binary operators require operands of the same type*)
         if t1 = t2 then
           (* Determine expression type based on operator and operand types *)
+          let _ = print_endline (string_of_typ t1 ^ " " ^ string_of_typ t2) in
           let t = match op with
               Add | Sub when t1 = Int -> Int
             | Equal | Neq -> Bool

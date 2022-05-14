@@ -9,18 +9,33 @@ print("Building scanner...")
 os.system("ocamlbuild semanttest.native")
 
 #tests that should pass
-for i in range(1, 2):
+print("Testing valid programs\n")
+for i in range(1, 3):
     if("error" in subprocess.getoutput(
-            "./scantest.native < ./semant_test_files/t{}".format(i))):
+            "./semanttest.native < ./semant_test_files/passt{}".format(i))):
         print("Test case " + str(i) + " ❌ failed")
     else:
         print("Test case " + str(i) + " ✅ passed!")
 
+print("")
+print("----------")
+print("")
+
+
+print("Testing invalid programs\n")
 # tests that should fail
-for i in range(1, 2):
-    if("error" in subprocess.getoutput(
-            "./scantest.native < ./semant_test_files/t{}".format(i))):
+for i in range(1, 3):
+    output = subprocess.getoutput("./semanttest.native < ./semant_test_files/failt{}".format(i))
+    if "error" in output:
+        print(output)
         print("Test case " + str(i) + " ✅ passed!")
-    else:
+    else :
+        print(output)
         print("Test case " + str(i) + " ❌ failed")
+
+    # if("error" in subprocess.getoutput(
+    #         "./scantest.native < ./semant_test_files/failt{}".format(i))):
+    #     print("Test case " + str(i) + " ✅ passed!")
+    # else:
+    #     print("Test case " + str(i) + " ❌ failed")
 
