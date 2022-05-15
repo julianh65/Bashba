@@ -105,6 +105,7 @@ let string_of_typ = function
   | Bool -> "bool"
   | String -> "String"
   | Lamb -> "lamb"
+  | File -> "File"
   | IntArray -> "int[]"
   | StringArray -> "String[]"
   | None -> "None"
