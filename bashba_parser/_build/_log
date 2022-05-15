@@ -1,7 +1,8 @@
 ### Starting build.
-# Target: bashba.ml.depends, tags: { extension:ml, file:bashba.ml, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules bashba.ml > bashba.ml.depends # cached
+# Target: scantest.ml.depends, tags: { extension:ml, file:scantest.ml, ocaml, ocamldep, quiet }
+ocamldep.opt -modules scantest.ml > scantest.ml.depends # cached
 # Target: ast.ml.depends, tags: { extension:ml, file:ast.ml, ocaml, ocamldep, quiet }
+<<<<<<< HEAD
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules ast.ml > ast.ml.depends # cached
 # Target: ast.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:ast.cmo, file:ast.ml, implem, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o ast.cmo ast.ml # cached
@@ -13,15 +14,27 @@
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o sast.cmo sast.ml # cached
 # Target: irgen.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:irgen.cmo, file:irgen.ml, implem, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o irgen.cmo irgen.ml # cached
+=======
+ocamldep.opt -modules ast.ml > ast.ml.depends # cached
+# Target: ast.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:ast.cmo, file:ast.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o ast.cmo ast.ml # cached
+>>>>>>> f8ab9cd6185b377449edef17dd2f2850c1872dbf
 # Target: parser.mly, tags: { extension:mly, file:parser.mly, infer, ocaml, ocamlyacc, parser, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlyacc parser.mly # cached
+ocamlyacc parser.mly # cached
 # Target: parser.mli.depends, tags: { extension:mli, file:parser.mli, ocaml, ocamldep, quiet }
+<<<<<<< HEAD
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules parser.mli > parser.mli.depends # cached
 # Target: parser.cmi, tags: { byte, compile, extension:mli, file:parser.mli, interf, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o parser.cmi parser.mli # cached
+=======
+ocamldep.opt -modules parser.mli > parser.mli.depends # cached
+# Target: parser.cmi, tags: { byte, compile, extension:mli, file:parser.mli, interf, ocaml, quiet }
+ocamlc.opt -c -o parser.cmi parser.mli # cached
+>>>>>>> f8ab9cd6185b377449edef17dd2f2850c1872dbf
 # Target: scanner.mll, tags: { extension:mll, file:scanner.mll, lexer, ocaml, ocamllex, quiet }
-/Users/jordhyg/.opam/default/bin/ocamllex.opt -q scanner.mll # cached
+ocamllex.opt -q scanner.mll # cached
 # Target: scanner.ml.depends, tags: { extension:ml, file:scanner.ml, ocaml, ocamldep, quiet }
+<<<<<<< HEAD
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules scanner.ml > scanner.ml.depends # cached
 # Target: scanner.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:scanner.cmo, file:scanner.ml, implem, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o scanner.cmo scanner.ml # cached
@@ -37,11 +50,21 @@
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o sast.cmx sast.ml # cached
 # Target: irgen.cmx, tags: { compile, extension:cmx, extension:ml, file:irgen.cmx, file:irgen.ml, implem, native, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o irgen.cmx irgen.ml # cached
+=======
+ocamldep.opt -modules scanner.ml > scanner.ml.depends # cached
+# Target: scanner.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:scanner.cmo, file:scanner.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o scanner.cmo scanner.ml # cached
+# Target: scantest.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:scantest.cmo, file:scantest.ml, implem, ocaml, quiet }
+ocamlc.opt -c -o scantest.cmo scantest.ml # cached
+# Target: ast.cmx, tags: { compile, extension:cmx, extension:ml, file:ast.cmx, file:ast.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o ast.cmx ast.ml # cached
+>>>>>>> f8ab9cd6185b377449edef17dd2f2850c1872dbf
 # Target: parser.ml.depends, tags: { extension:ml, file:parser.ml, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules parser.ml > parser.ml.depends # cached
+ocamldep.opt -modules parser.ml > parser.ml.depends # cached
 # Target: parser.cmx, tags: { compile, extension:cmx, extension:ml, file:parser.cmx, file:parser.ml, implem, native, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o parser.cmx parser.ml # cached
+ocamlopt.opt -c -o parser.cmx parser.ml # cached
 # Target: scanner.cmx, tags: { compile, extension:cmx, extension:ml, file:scanner.cmx, file:scanner.ml, implem, native, ocaml, quiet }
+<<<<<<< HEAD
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o scanner.cmx scanner.ml # cached
 # Target: semant.cmx, tags: { compile, extension:cmx, extension:ml, file:semant.cmx, file:semant.ml, implem, native, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o semant.cmx semant.ml # cached
@@ -49,4 +72,11 @@
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o bashba.cmx bashba.ml # cached
 # Target: bashba.native, tags: { dont_link_with, extension:native, file:bashba.native, link, native, ocaml, program, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -I /Users/jordhyg/.opam/default/lib/llvm /Users/jordhyg/.opam/default/lib/llvm/shared/llvm.cmxa ast.cmx sast.cmx irgen.cmx parser.cmx scanner.cmx semant.cmx bashba.cmx -o bashba.native # cached
+=======
+ocamlopt.opt -c -o scanner.cmx scanner.ml # cached
+# Target: scantest.cmx, tags: { compile, extension:cmx, extension:ml, file:scantest.cmx, file:scantest.ml, implem, native, ocaml, quiet }
+ocamlopt.opt -c -o scantest.cmx scantest.ml # cached
+# Target: scantest.native, tags: { dont_link_with, extension:native, file:scantest.native, link, native, ocaml, program, quiet }
+ocamlopt.opt ast.cmx parser.cmx scanner.cmx scantest.cmx -o scantest.native # cached
+>>>>>>> f8ab9cd6185b377449edef17dd2f2850c1872dbf
 # Compilation successful.

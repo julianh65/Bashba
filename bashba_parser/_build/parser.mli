@@ -31,6 +31,10 @@ type token =
   | CONTINUE
   | ARROW
   | LAMB
+  | LBRACK
+  | RBRACK
+  | STRINGARRAY
+  | INTARRAY
   | BOOL
   | INT
   | STRING

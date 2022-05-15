@@ -9,3 +9,5 @@ t7: Return statements
 t8: lamb type
 t9: Calling a function
 t10: While, Break statements
+t11: Array declaration
+t12: Array assignment

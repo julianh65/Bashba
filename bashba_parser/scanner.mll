@@ -20,6 +20,8 @@ rule token = parse
  | ')' { RPAREN } 
  | ',' { COMMA } 
  | ';' { SEMI } 
+ | '[' {LBRACK}
+ | ']' {RBRACK}
  | "and" { AND } 
  | "or" { OR } 
  | "not" { NOT } 
@@ -46,6 +48,8 @@ rule token = parse
  | "bool" { BOOL } 
  | "String" { STRING } 
  | "File" { FILE }
+ | "String[]" {STRINGARRAY}
+ | "int[]"  {INTARRAY}
  | dig+ as d { LITERAL(int_of_string d) }
  | lit ( dig | lit | '_')* as d {ID(d)}
  | '"' ([^ '"']* as str) '"' { STRINGLIT(str) }

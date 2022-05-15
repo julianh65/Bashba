@@ -7,6 +7,9 @@ open Ast
 %token SEMI PLUS MINUS TIMES DIVIDE MOD LBRACE RBRACE LPAREN RPAREN
 %token COMMA AND OR NOT EQ LEQ GEQ NEQ GT LT ASSIGN COLON
 %token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE ARROW LAMB
+%token LBRACK RBRACK
+%token STRINGARRAY
+%token INTARRAY
 %token BOOL INT STRING NONE FILE
 %token <bool> BLIT
 %token <string> ID
@@ -48,6 +51,8 @@ typ:
   | STRING { String }
   | LAMB { Lamb }
   | FILE { File }
+  | INTARRAY { IntArray }
+  | STRINGARRAY {StringArray }
 
 /* fdecl */
 fdecl:
@@ -62,6 +67,21 @@ fdecl:
     }
   }
 
+string_array:
+  { [] }
+  | string_list {$1}
+
+string_list:
+  STRINGLIT { [$1] }
+  | STRINGLIT COMMA string_list {$1::$3}
+
+int_array:
+  { [] }
+  | int_list {$1}
+
+int_list:
+  LITERAL { [$1] }
+  | LITERAL COMMA int_list {$1::$3}
 
 /* formals_opt */
 formals_opt:
@@ -85,6 +105,7 @@ stmt:
   | RETURN expr_rule SEMI                                                                 { Return $2           }
   | BREAK SEMI                                                                            { Break               }
   | CONTINUE SEMI                                                                         { Continue            }
+
 
 expr_rule:
   | BLIT                          { BoolLit $1            }
@@ -115,6 +136,8 @@ expr_rule:
       body=$6;
     })
   }
+  | LBRACK int_array RBRACK       { IntArray $2           }
+  | LBRACK string_array RBRACK    { StringArray $2        }
 
 /* args_opt*/
 args_opt:
