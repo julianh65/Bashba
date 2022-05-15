@@ -46,6 +46,7 @@ typ:
   | BOOL  { Bool  }
   | STRING { String }
   | LAMB { Lamb }
+  | FILE { File }
 
 /* fdecl */
 fdecl:
