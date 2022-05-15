@@ -15,6 +15,7 @@
 "Rule: ocaml: ml -> cmo & cmi (%=semant )": "|\235i\151\0025\234\151X\130>Z\246!\195v"
 "Resource: /Users/jordhyg/Desktop/Spring 2022/PLT/language/Bashba/bashba_parser/semant.ml": "\181\232\140J\128\158La\184\002w\188\192\156\255\178"
 "Rule: ocamllex (%=scanner )": "b\199\137\127\031\003&\245'\014\162\251\128|\148\""
+"Rule: ocaml: cmx* & o* -> native (%=bashba )": "R\182\127\1802\171\015\235\197\011\140\133\023U\0177"
 "Resource: /Users/jordhyg/Desktop/Spring 2022/PLT/language/Bashba/bashba_parser/sast.ml": "\187\248j\001\254 \138u\017n\217'<\216\250\227"
 "Rule: ocaml dependencies ml (%=scanner )": "\146\\\016\253\242\193\131*\006C\207\183\1354i\158"
 "Rule: ocaml: ml & cmi -> cmx & o (%=bashba )": "\023\176!\162\134\165\198)\172\224i\189\129\229!z"
