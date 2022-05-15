@@ -24,7 +24,7 @@ and slamb_def = {
   srtyp: typ;
   slambname : string;
   sformals: bind list;
-  sbody: stmt list;
+  sbody: sstmt list;
 }
 
 (* func_def: ret_typ fname formals locals body *)

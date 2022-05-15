@@ -1,0 +1,17 @@
+int j;
+int main()
+{
+    while (2+8)
+    {
+        j = j + 1;
+        if (j == 5)
+        {
+            break;
+        }
+        if (j == 645)
+        {
+            continue;
+        }
+    }
+    return 0;
+}

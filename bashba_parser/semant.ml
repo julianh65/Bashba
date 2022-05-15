@@ -86,11 +86,11 @@ let check (globals, functions) =
       | StringLit l -> (String, SStringLit l)
       | None -> (None, SNone)
       (*need to fix lambda functions here*)
-      (* | Lamb l -> (let this_slamb = { 
-        srtyp: Int; 
-        sformals: ""; 
-        slocals: ""; 
-        sbody: check_stmt_list l.body;}) in (Lamb, Slamb this_slamb) *)
+      | Lamb l -> let this = 
+        { srtyp = l.rtyp;
+        slambname = l.lambname;
+        sformals = l.formals;
+        sbody = check_stmt_list l.body} in (Lamb, SLamb this)
       | Id var -> (type_of_identifier var, SId var)
       | Assign(var, e) as ex ->
         let lt = type_of_identifier var
@@ -99,7 +99,6 @@ let check (globals, functions) =
                   string_of_typ rt ^ " in " ^ string_of_expr ex
         in
         (check_assign lt rt err, SAssign(var, (rt, e')))
-
       | Binop(e1, op, e2) as e ->
         let (t1, e1') = check_expr e1
         and (t2, e2') = check_expr e2 in
@@ -134,16 +133,12 @@ let check (globals, functions) =
           in
           let args' = List.map2 check_call fd.formals args
           in (fd.rtyp, SCall(fname, args'))
-    in
-
-    let check_bool_expr e =
+    and check_bool_expr e =
       let (t, e') = check_expr e in
       match t with
       | Bool -> (t, e')
       |  _ -> raise (Failure ("expected Boolean expression in " ^ string_of_expr e))
-    in
-
-    let rec check_stmt_list =function
+    and check_stmt_list =function
         [] -> []
       | Block sl :: sl'  -> check_stmt_list (sl @ sl') (* Flatten blocks *)
       | s :: sl -> check_stmt s :: check_stmt_list sl
