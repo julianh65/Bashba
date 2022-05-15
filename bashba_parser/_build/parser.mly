@@ -7,7 +7,7 @@ open Ast
 %token SEMI PLUS MINUS TIMES DIVIDE MOD LBRACE RBRACE LPAREN RPAREN
 %token COMMA AND OR NOT EQ LEQ GEQ NEQ GT LT ASSIGN COLON
 %token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE ARROW LAMB
-%token BOOL INT STRING NONE
+%token BOOL INT STRING NONE FILE
 %token <bool> BLIT
 %token <string> ID
 %token <string> STRINGLIT
@@ -46,6 +46,7 @@ typ:
   | BOOL  { Bool  }
   | STRING { String }
   | LAMB { Lamb }
+  | FILE { File }
 
 /* fdecl */
 fdecl:

@@ -35,6 +35,7 @@ type token =
   | INT
   | STRING
   | NONE
+  | FILE
   | BLIT of (bool)
   | ID of (string)
   | STRINGLIT of (string)

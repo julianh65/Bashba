@@ -45,6 +45,7 @@ rule token = parse
  | "int" { INT } 
  | "bool" { BOOL } 
  | "String" { STRING } 
+ | "File" { FILE }
  | dig+ as d { LITERAL(int_of_string d) }
  | lit ( dig | lit | '_')* as d {ID(d)}
  | '"' ([^ '"']* as str) '"' { STRINGLIT(str) }
