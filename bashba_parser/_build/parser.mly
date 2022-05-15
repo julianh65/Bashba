@@ -12,6 +12,7 @@ open Ast
 %token <string> ID
 %token <string> STRINGLIT
 %token <int> LITERAL
+%token <string> FILELIT
 
 %start prog_rules 
 %type <Ast.program> prog_rules
@@ -89,6 +90,7 @@ expr_rule:
   | BLIT                          { BoolLit $1            }
   | LITERAL                       { Literal $1            }
   | STRINGLIT                     { StringLit $1          }
+  | FILELIT                       { FileLit $1            }
   | ID                            { Id $1                 }
   | expr_rule PLUS expr_rule      { Binop ($1, Add, $3)   }
   | expr_rule MINUS expr_rule     { Binop ($1, Sub, $3)   }

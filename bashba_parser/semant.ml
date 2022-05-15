@@ -84,6 +84,7 @@ let check (globals, functions) =
         Literal l -> (Int, SLiteral l)
       | BoolLit l -> let _ = print_endline "BOOL" in (Bool, SBoolLit l)
       | StringLit l -> (String, SStringLit l)
+      | FileLit l -> (String, SFileLit l)
       | None -> (None, SNone)
       (*need to fix lambda functions here*)
       | Lamb l -> let this = 

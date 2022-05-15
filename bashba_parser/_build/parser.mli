@@ -40,6 +40,7 @@ type token =
   | ID of (string)
   | STRINGLIT of (string)
   | LITERAL of (int)
+  | FILELIT of (string)
 
 val prog_rules :
   (Lexing.lexbuf  -> token) -> Lexing.lexbuf -> Ast.program
