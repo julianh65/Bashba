@@ -1,6 +1,6 @@
 type bop = Add | Sub | Times | Divide | Mod | Equal | Neq | Leq | Geq | Less | Great | And | Or
 
-type typ = Int | Bool | String | Lamb | None
+type typ = Int | Bool | String | Lamb | None | File
 
 type bind = typ * string
 
@@ -46,6 +46,7 @@ let string_of_typ = function
   | String -> "String"
   | Lamb -> "lamb"
   | None -> "None"
+  | File -> "File"
 
 let string_of_bind (t, id) = string_of_typ t ^ " " ^ id
 
