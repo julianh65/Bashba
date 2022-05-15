@@ -157,6 +157,16 @@ let translate (globals, functions) =
         SBlock sl -> List.fold_left build_stmt builder sl
       | SExpr e -> ignore(build_expr builder e); builder
       | SReturn e -> ignore(L.build_ret (build_expr builder e) builder); builder
+      (*ignore sif for now and swhile*)
+      | SIf (e, s1) -> ignore(build_expr builder e); builder
+      | SWhile (e, s) -> ignore(build_expr builder e); builder
+      | SBreak -> ignore(L.build_br (L.insertion_block builder) builder); builder
+      | SContinue -> ignore(L.build_br (L.insertion_block builder) builder); builder
+      | SIfElse (_, _, _) -> ignore(L.build_br (L.insertion_block builder) builder); builder
+
+
+
+(* 
       | SIf (predicate, then_stmt) ->
         let bool_val = build_expr builder predicate in
 
@@ -184,7 +194,7 @@ let translate (globals, functions) =
         let end_bb = L.append_block context "while_end" the_function in
 
         ignore(L.build_cond_br bool_val body_bb end_bb while_builder);
-        L.builder_at_end context end_bb
+        L.builder_at_end context end_bb *)
 
     in
     (* Build the code for each statement in the function *)

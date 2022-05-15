@@ -18,7 +18,7 @@
    
      let lexbuf = Lexing.from_channel !channel in
    
-     let ast = parser.prog_rules Scanner.token lexbuf in
+     let ast = Parser.prog_rules Scanner.token lexbuf in
      match !action with
        Ast -> print_string (Ast.string_of_program ast)
      | _ -> let sast = Semant.check ast in
