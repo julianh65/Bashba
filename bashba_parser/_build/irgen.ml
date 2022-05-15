@@ -110,7 +110,8 @@ let translate (globals, functions) =
         ignore(L.build_store e' (lookup s) builder); e'
       | SNone -> L.const_int i8_t 0
       | SStringLit l -> L.build_global_stringptr l "str" builder
-      (*ignore lambda functions for now*)
+      | SFileLit l -> L.build_global_stringptr l "str" builder
+      (*ignore lambda functions for now*) 
       | SLamb(_) -> L.const_int i8_t 0
       | SBinop (e1, op, e2) ->
         let e1' = build_expr builder e1
