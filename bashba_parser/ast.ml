@@ -13,8 +13,8 @@ type expr =
   | Assign of string * expr
   | Call of string * expr list
   | Lamb of lamb_def
-  | IntArray of expr list
-  | StringArray of expr list
+  | IntArray of int list
+  | StringArray of string list
   | None
 and stmt =
   | Block of stmt list

@@ -85,16 +85,16 @@ string_array:
   | string_list {$1}
 
 string_list:
-  expr_rule { [$1] }
-  | expr_rule COMMA string_list {$1::$3}
+  STRINGLIT { [$1] }
+  | STRINGLIT COMMA string_list {$1::$3}
 
 int_array:
   { [] }
   | int_list {$1}
 
 int_list:
-  expr_rule { [$1] }
-  | expr_rule COMMA int_list {$1::$3}
+  LITERAL { [$1] }
+  | LITERAL COMMA int_list {$1::$3}
 
 /* formals_opt */
 formals_opt:
