@@ -1,0 +1,8 @@
+int a;
+bool b;
+
+int main(){
+
+    a = a+b;
+
+}

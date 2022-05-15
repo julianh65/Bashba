@@ -1,6 +1,6 @@
 type bop = Add | Sub | Times | Divide | Mod | Equal | Neq | Leq | Geq | Less | Great | And | Or
 
-type typ = Int | Bool | String | Lamb | IntArray | StringArray | None
+type typ = Int | Bool | String | Lamb | None | File | IntArray | StringArray
 
 type bind = typ * string
 
@@ -27,9 +27,8 @@ and stmt =
   | Return of expr
 and lamb_def = {
   rtyp: typ;
-  fname: string;
+  lambname : string;
   formals: bind list;
-  locals: bind list;
   body: stmt list;
 }
 
@@ -42,6 +41,18 @@ type func_def = {
 }
 open Printf
 type program = bind list * func_def list
+
+let string_of_typ = function
+    Int -> "int"
+  | Bool -> "bool"
+  | String -> "String"
+  | Lamb -> "lamb"
+  | None -> "None"
+  | File -> "File"
+
+let string_of_bind (t, id) = string_of_typ t ^ " " ^ id
+
+let string_of_vdecl (t, id) = string_of_typ t ^ " " ^ id ^ ";\n"
 
 let string_of_op = function
     Add -> "+"
@@ -67,12 +78,14 @@ let rec string_of_expr = function
   string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
 | Assign(v, e) -> v ^ " = " ^ string_of_expr e
 | Call(s, l) -> "(" ^ s ^ ")\n"
-| Lamb(s) -> "lambda func"
 | IntArray(s) -> "int array"
 | StringArray(s) -> "string array"
+| Lamb(s) -> String.concat "" (List.map string_of_bind s.formals) ^ "->" ^
+  string_of_typ s.rtyp ^ " : " ^ "(" ^ 
+  String.concat "" (List.map string_of_stmt s.body) ^ ")"
 | None -> "None"
 
-let rec string_of_stmt = function
+and string_of_stmt = function
     Block(stmts) ->
     "{\n" ^ String.concat "" (List.map string_of_stmt stmts) ^ "}\n"
   | Expr(expr) -> string_of_expr expr ^ ";\n";

@@ -7,10 +7,10 @@ open Ast
 %token SEMI PLUS MINUS TIMES DIVIDE MOD LBRACE RBRACE LPAREN RPAREN
 %token COMMA AND OR NOT EQ LEQ GEQ NEQ GT LT ASSIGN COLON
 %token WHILE RETURN IF ELSE EOF LAMBDA BREAK CONTINUE ARROW LAMB
-%token BOOL INT STRING NONE
 %token LBRACK RBRACK
 %token STRINGARRAY
 %token INTARRAY
+%token BOOL INT STRING NONE FILE
 %token <bool> BLIT
 %token <string> ID
 %token <string> STRINGLIT
@@ -35,13 +35,12 @@ decls:
    /* nothing */ { ([], [])               }
  | vdecl SEMI decls { (($1 :: fst $3), snd $3) }
  | fdecl decls { (fst $2, ($1 :: snd $2)) }
- | lambdadecl decls { (fst $2, ($1 :: snd $2)) }
+//  | lambdadecl decls { (fst $2, ($1 :: snd $2)) }
 
 vdecl_list:
   /*nothing*/ { [] }
   | vdecl SEMI vdecl_list  {  $1 :: $3 }
 
-/* int x */
 vdecl:
   typ ID { ($1, $2) }
 
@@ -50,6 +49,7 @@ typ:
   | BOOL  { Bool  }
   | STRING { String }
   | LAMB { Lamb }
+  | FILE { File }
   | INTARRAY { IntArray }
   | STRINGARRAY {StringArray }
 
@@ -61,22 +61,8 @@ fdecl:
       rtyp=fst $1;
       fname=snd $1;
       formals= $3;
-      locals= $6;
+      locals = $6;
       body= $7
-    }
-  }
-// lambdas declared as
-// lamb mylambda = int x, int y->int : (x + y)
-
-lambdadecl:
-  vdecl ASSIGN formals_opt ARROW typ COLON LPAREN stmt_list RPAREN
-  {
-    {
-      rtyp= $5;
-      fname= snd $1;
-      formals= $3;
-      locals= [];
-      body= $8
     }
   }
 
@@ -138,7 +124,16 @@ expr_rule:
   | ID ASSIGN expr_rule           { Assign ($1, $3)       }
   | LPAREN expr_rule RPAREN       { $2                    }
   | NONE                          { None                  }
-  | ID LPAREN args_opt RPAREN     { Call ($1, $3)         }
+  | ID LPAREN args_opt RPAREN     { Call ($1, $3)  }
+  /* x = int x, int y -> int : (body) */
+  | formals_opt ARROW typ COLON LPAREN stmt_list RPAREN { Lamb (
+    {
+      rtyp=$3;
+      lambname="";
+      formals=$1;
+      body=$6;
+    })
+  }
   | LBRACK int_array RBRACK       { IntArray $2           }
   | LBRACK string_array RBRACK    { StringArray $2        }
 

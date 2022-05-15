@@ -1,0 +1,10 @@
+int main(){
+
+    lamb x;
+    int z;
+
+    x = int y -> int : ( return 2; );
+
+    return z;
+    
+}

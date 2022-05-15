@@ -1,0 +1,9 @@
+int main(){
+
+    return foo(0);
+}
+
+int foo(String y) {
+
+    return 0;
+}
