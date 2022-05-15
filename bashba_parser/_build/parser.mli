@@ -35,6 +35,10 @@ type token =
   | INT
   | STRING
   | NONE
+  | LBRACK
+  | RBRACK
+  | STRINGARRAY
+  | INTARRAY
   | BLIT of (bool)
   | ID of (string)
   | STRINGLIT of (string)
