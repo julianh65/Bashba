@@ -13,8 +13,8 @@ type expr =
   | Assign of string * expr
   | Call of string * expr list
   | Lamb of lamb_def
-  | IntArray of int list
-  | StringArray of string list
+  | IntArray of expr list
+  | StringArray of expr list
   | None
 and stmt =
   | Block of stmt list
@@ -40,7 +40,7 @@ type func_def = {
   locals: bind list;
   body: stmt list;
 }
-
+open Printf
 type program = bind list * func_def list
 
 let string_of_op = function

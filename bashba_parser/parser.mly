@@ -85,16 +85,16 @@ string_array:
   | string_list {$1}
 
 string_list:
-  STRINGLIT { [$1] }
-  | STRINGLIT COMMA string_list {$1::$3}
+  expr_rule { [$1] }
+  | expr_rule COMMA string_list {$1::$3}
 
 int_array:
   { [] }
   | int_list {$1}
 
 int_list:
-  LITERAL { [$1] }
-  | LITERAL COMMA int_list {$1::$3}
+  expr_rule { [$1] }
+  | expr_rule COMMA int_list {$1::$3}
 
 /* formals_opt */
 formals_opt:
@@ -119,13 +119,12 @@ stmt:
   | BREAK SEMI                                                                            { Break               }
   | CONTINUE SEMI                                                                         { Continue            }
 
+
 expr_rule:
   | BLIT                          { BoolLit $1            }
   | LITERAL                       { Literal $1            }
   | STRINGLIT                     { StringLit $1          }
   | ID                            { Id $1                 }
-  | LBRACK int_array RBRACK       { IntArray $2           }
-  | LBRACK string_array RBRACK    { StringArray $2        }
   | expr_rule PLUS expr_rule      { Binop ($1, Add, $3)   }
   | expr_rule MINUS expr_rule     { Binop ($1, Sub, $3)   }
   | expr_rule EQ expr_rule        { Binop ($1, Equal, $3) }
@@ -140,6 +139,8 @@ expr_rule:
   | LPAREN expr_rule RPAREN       { $2                    }
   | NONE                          { None                  }
   | ID LPAREN args_opt RPAREN     { Call ($1, $3)         }
+  | LBRACK int_array RBRACK       { IntArray $2           }
+  | LBRACK string_array RBRACK    { StringArray $2        }
 
 /* args_opt*/
 args_opt:
