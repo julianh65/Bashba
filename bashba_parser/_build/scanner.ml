@@ -1631,7 +1631,7 @@ and __ocaml_lex_token_rec lexbuf __ocaml_lex_state =
 
   | 40 ->
 # 50 "scanner.mll"
-          ( FILE )
+          ( STRING )
 # 1636 "scanner.ml"
 
   | 41 ->

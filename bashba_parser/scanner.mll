@@ -47,7 +47,7 @@ rule token = parse
  | "int" { INT } 
  | "bool" { BOOL } 
  | "String" { STRING } 
- | "File" { FILE }
+ | "File" { STRING }
  | "String[]" {STRINGARRAY}
  | "int[]"  {INTARRAY}
  | dig+ as d { LITERAL(int_of_string d) }
