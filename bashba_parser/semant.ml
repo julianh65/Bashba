@@ -91,19 +91,19 @@ let check (globals, functions) =
     List.iter helper (globals @ func.formals @ func.locals);
 
     (* Update lambs with bodies *)
-    let add_lamb l var =
+    (* let add_lamb l var =
         match l with
         | Lamb(lambda_def) -> Hashtbl.replace lambs var lambda_def;
         | _ -> ();
-    in
+    in *)
 
     (* Return a lamb_def from our local lambs table *)
-    let find_lamb lambname = 
+    (* let find_lamb lambname = 
       try Hashtbl.find lambs lambname
       with Not_found -> raise (Failure ("unrecognized lamb /" ^ lambname ^ "/"))
     in
 
-      (* Return a variable from our local symbol table *)
+      Return a variable from our local symbol table *)
     let type_of_identifier s =
       try StringMap.find s symbols
       with Not_found -> raise (Failure ("undeclared identifier " ^ s))
@@ -116,6 +116,9 @@ let check (globals, functions) =
       | StringLit l -> (String, SStringLit l)
       | FileLit l -> (String, SFileLit l)
       | None -> (None, SNone)
+      | IntArray _ -> (IntArray, SIntArray [])
+      | StringArray _ -> (StringArray, SStringArray [])
+      | FileArray _ -> (FileArray, SFileArray [])
       (*need to fix lambda functions here*)
       | Lamb l -> let this = 
         { srtyp = l.rtyp;
