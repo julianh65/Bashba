@@ -25,7 +25,7 @@ opam install llvm
 Build the compiler
 
 ```
-ocamlbuild -pkgs llvm bashba.native
+f
 export PATH=/usr/local/opt/llvm/bin:$PATH
 ```
 
