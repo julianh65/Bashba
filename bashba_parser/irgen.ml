@@ -24,7 +24,7 @@ let translate (globals, functions) =
 
   (* Create the LLVM compilation module into which
      we will generate code *)
-  let the_module = L.create_module context "MicroC" in
+  let the_module = L.create_module context "Bashba" in
 
   (* Get types from the context *)
   let i32_t      = L.i32_type    context
@@ -33,14 +33,17 @@ let translate (globals, functions) =
   and string_t   = L.pointer_type (L.i8_type context)
   and i1_t       = L.i1_type     context in
 
-  (* Return the LLVM type for a MicroC type *)
+  (* Return the LLVM type for a Bashba type *)
   let ltype_of_typ = function
       A.Int   -> i32_t
     | A.None -> i8_t
     | A.Bool  -> i1_t
     | A.String -> string_t 
     | A.Lamb -> void_t
-    | A.File -> string_t
+    | IntArray -> i32_t
+    | StringArray -> i1_t
+    | FileArray -> i1_t
+    | File -> i1_t
   in
 
   (* Create a map of global variables after creating each *)
@@ -110,8 +113,11 @@ let translate (globals, functions) =
         ignore(L.build_store e' (lookup s) builder); e'
       | SNone -> L.const_int i8_t 0
       | SStringLit l -> L.build_global_stringptr l "str" builder
-      | SFileLit l -> L.build_global_stringptr l "str" builder
-      (*ignore lambda functions for now*) 
+      | SIntArray _ -> L.const_int i32_t 0
+      | SStringArray _ -> L.const_int i1_t 0
+      | SFileArray _ -> L.const_int i1_t 0
+      | SFileLit _ -> L.const_int i1_t 0
+      (*ignore lambda functions for now*)
       | SLamb(_) -> L.const_int i8_t 0
       | SBinop (e1, op, e2) ->
         let e1' = build_expr builder e1
@@ -162,38 +168,10 @@ let translate (globals, functions) =
       (*ignore sif for now and swhile*)
       | SIf (e, s1) -> ignore(build_expr builder e); builder
       | SWhile (e, s) -> ignore(build_expr builder e); builder
-(*
-      | SIf (predicate, then_stmt) ->
-        let bool_val = build_expr builder predicate in
-
-        let then_bb = L.append_block context "then" the_function in
-        ignore (build_stmt (L.builder_at_end context then_bb) then_stmt);
-
-        let end_bb = L.append_block context "if_end" the_function in
-        let build_br_end = L.build_br end_bb in (* partial function *)
-        add_terminal (L.builder_at_end context then_bb) build_br_end;
-        add_terminal (L.builder_at_end context else_bb) build_br_end;
-
-        ignore(L.build_cond_br bool_val then_bb else_bb builder);
-        L.builder_at_end context end_bb
-
-      | SWhile (predicate, body) ->
-        let while_bb = L.append_block context "while" the_function in
-        let build_br_while = L.build_br while_bb in (* partial function *)
-        ignore (build_br_while builder);
-        let while_builder = L.builder_at_end context while_bb in
-        let bool_val = build_expr while_builder predicate in
-
-        let body_bb = L.append_block context "while_body" the_function in
-        add_terminal (build_stmt (L.builder_at_end context body_bb) body) build_br_while;
-
-        let end_bb = L.append_block context "while_end" the_function in
-
-        ignore(L.build_cond_br bool_val body_bb end_bb while_builder);
-*)
       | SBreak -> ignore(L.build_br (L.insertion_block builder) builder); builder
       | SContinue -> ignore(L.build_br (L.insertion_block builder) builder); builder
       | SIfElse (_, _, _) -> ignore(L.build_br (L.insertion_block builder) builder); builder
+
 
 
 (* 

@@ -11,6 +11,9 @@ and sx =
   | SAssign of string * sexpr
   | SCall of string * sexpr list
   | SLamb of slamb_def
+  | SIntArray of sexpr list
+  | SStringArray of sexpr list
+  | SFileArray of sexpr list
   | SNone
 and sstmt =
     SBlock of sstmt list
@@ -47,6 +50,9 @@ let rec string_of_sexpr (t, e) =
       | SStringLit(s) -> "\"" ^ s ^ "\""
       | SFileLit(s) -> "\"" ^ s ^ "\""
       | SId(s) -> s
+      | SIntArray (l) -> "[" ^ "intarr" ^ "]"
+      | SStringArray (l) -> "[" ^ "strarr" ^ "]"
+      | SFileArray (l) -> "[" ^ "filearr" ^ "]"
       | SBinop(e1, o, e2) ->
         string_of_sexpr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_sexpr e2
       | SAssign(v, e) -> v ^ " = " ^ string_of_sexpr e
