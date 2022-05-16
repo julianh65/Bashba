@@ -4,25 +4,28 @@
 # Target: ast.ml.depends, tags: { extension:ml, file:ast.ml, ocaml, ocamldep, quiet }
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules ast.ml > ast.ml.depends
 # Target: irgen.ml.depends, tags: { extension:ml, file:irgen.ml, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules irgen.ml > irgen.ml.depends # cached
+/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules irgen.ml > irgen.ml.depends
 # Target: ast.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:ast.cmo, file:ast.ml, implem, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o ast.cmo ast.ml
 # Target: sast.ml.depends, tags: { extension:ml, file:sast.ml, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules sast.ml > sast.ml.depends # cached
+/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules sast.ml > sast.ml.depends
 # Target: sast.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:sast.cmo, file:sast.ml, implem, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o sast.cmo sast.ml
 # Target: parser.mly, tags: { extension:mly, file:parser.mly, infer, ocaml, ocamlyacc, parser, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlyacc parser.mly # cached
+/Users/jordhyg/.opam/default/bin/ocamlyacc parser.mly
++ /Users/jordhyg/.opam/default/bin/ocamlyacc parser.mly
+1 rule never reduced
+56 shift/reduce conflicts, 3 reduce/reduce conflicts.
 # Target: parser.mli.depends, tags: { extension:mli, file:parser.mli, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules parser.mli > parser.mli.depends # cached
+/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules parser.mli > parser.mli.depends
 # Target: scanner.mll, tags: { extension:mll, file:scanner.mll, lexer, ocaml, ocamllex, quiet }
-/Users/jordhyg/.opam/default/bin/ocamllex.opt -q scanner.mll # cached
+/Users/jordhyg/.opam/default/bin/ocamllex.opt -q scanner.mll
 # Target: scanner.ml.depends, tags: { extension:ml, file:scanner.ml, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules scanner.ml > scanner.ml.depends # cached
+/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules scanner.ml > scanner.ml.depends
 # Target: parser.cmi, tags: { byte, compile, extension:mli, file:parser.mli, interf, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o parser.cmi parser.mli
 # Target: semant.ml.depends, tags: { extension:ml, file:semant.ml, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules semant.ml > semant.ml.depends # cached
+/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules semant.ml > semant.ml.depends
 # Target: irgen.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:irgen.cmo, file:irgen.ml, implem, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o irgen.cmo irgen.ml
 + /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o irgen.cmo irgen.ml
@@ -71,7 +74,7 @@ Warning 26 [unused-var]: unused variable find_lamb.
 # Target: sast.cmx, tags: { compile, extension:cmx, extension:ml, file:sast.cmx, file:sast.ml, implem, native, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o sast.cmx sast.ml
 # Target: parser.ml.depends, tags: { extension:ml, file:parser.ml, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules parser.ml > parser.ml.depends # cached
+/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules parser.ml > parser.ml.depends
 # Target: parser.cmx, tags: { compile, extension:cmx, extension:ml, file:parser.cmx, file:parser.ml, implem, native, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o parser.cmx parser.ml
 # Target: irgen.cmx, tags: { compile, extension:cmx, extension:ml, file:irgen.cmx, file:irgen.ml, implem, native, ocaml, quiet }
@@ -120,11 +123,11 @@ Warning 26 [unused-var]: unused variable find_lamb.
 # Target: bashba.native, tags: { dont_link_with, extension:native, file:bashba.native, link, native, ocaml, program, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -I /Users/jordhyg/.opam/default/lib/llvm /Users/jordhyg/.opam/default/lib/llvm/shared/llvm.cmxa ast.cmx sast.cmx irgen.cmx parser.cmx scanner.cmx semant.cmx bashba.cmx -o bashba.native
 + /Users/jordhyg/.opam/default/bin/ocamlopt.opt -I /Users/jordhyg/.opam/default/lib/llvm /Users/jordhyg/.opam/default/lib/llvm/shared/llvm.cmxa ast.cmx sast.cmx irgen.cmx parser.cmx scanner.cmx semant.cmx bashba.cmx -o bashba.native
-ld: warning: object file (/var/folders/fh/rq_9bcl95x32sx6nssmfg4lr0000gn/T/camlstartupc30f59.o) was built for newer macOS version (12.0) than being linked (10.16)
-ld: warning: object file (bashba.o) was built for newer macOS version (12.0) than being linked (10.16)
-ld: warning: object file (semant.o) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/var/folders/fh/rq_9bcl95x32sx6nssmfg4lr0000gn/T/camlstartup67ba85.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/std_exit.o) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (bashba.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (scanner.o) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (semant.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (parser.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (irgen.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (sast.o) was built for newer macOS version (12.0) than being linked (10.16)

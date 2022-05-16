@@ -50,6 +50,7 @@ rule token = parse
  | "File" { STRING }
  | "String[]" {STRINGARRAY}
  | "int[]"  {INTARRAY}
+ | "File[]" {FILEARRAY}
  | dig+ as d { LITERAL(int_of_string d) }
  | lit ( dig | lit | '_')* as d {ID(d)}
  | '"' ([^ '"']* as str) '"' { STRINGLIT(str) }
