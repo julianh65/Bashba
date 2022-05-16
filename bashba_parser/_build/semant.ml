@@ -73,7 +73,37 @@ let check (globals, functions) =
         StringMap.empty (globals @ func.formals @ func.locals )
     in
 
-    (* Return a variable from our local symbol table *)
+
+    let lambs = Hashtbl.create 10 in
+
+    let helper (bind : typ * string) = 
+      match (fst bind) with
+      | Int -> ()
+      | Lamb -> Hashtbl.add lambs ((snd bind)){
+          rtyp = Int;
+          lambname = "";
+          formals = [Int, "x"];
+          body = [];
+        }
+      | _ -> ()
+    in
+
+    List.iter helper (globals @ func.formals @ func.locals);
+
+    (* Update lambs with bodies *)
+    let add_lamb l var =
+        match l with
+        | Lamb(lambda_def) -> Hashtbl.replace lambs var lambda_def;
+        | _ -> ();
+    in
+
+    (* Return a lamb_def from our local lambs table *)
+    let find_lamb lambname = 
+      try Hashtbl.find lambs lambname
+      with Not_found -> raise (Failure ("unrecognized lamb /" ^ lambname ^ "/"))
+    in
+
+      (* Return a variable from our local symbol table *)
     let type_of_identifier s =
       try StringMap.find s symbols
       with Not_found -> raise (Failure ("undeclared identifier " ^ s))
@@ -97,9 +127,10 @@ let check (globals, functions) =
         let lt = type_of_identifier var
         and (rt, e') = check_expr e in
         let err = "illegal assignment " ^ string_of_typ lt ^ " = " ^
-                  string_of_typ rt ^ " in " ^ string_of_expr ex
-        in
-        (check_assign lt rt err, SAssign(var, (rt, e')))
+                  string_of_typ rt ^ " in " ^ string_of_expr ex in
+                  (* Add assignment to lambs table *)
+                  (* let _ = add_lamb e var in *)
+                  (check_assign lt rt err, SAssign(var, (rt, e')))
       | Binop(e1, op, e2) as e ->
         let (t1, e1') = check_expr e1
         and (t2, e2') = check_expr e2 in
@@ -121,19 +152,40 @@ let check (globals, functions) =
           (t, SBinop((t1, e1'), op, (t2, e2')))
         else raise (Failure err)
       | Call(fname, args) as call ->
-        let fd = find_func fname in
-        let param_length = List.length fd.formals in
-        if List.length args != param_length then
-          raise (Failure ("expecting " ^ string_of_int param_length ^
-                          " arguments in " ^ string_of_expr call))
-        else let check_call (ft, _) e =
-               let (et, e') = check_expr e in
-               let err = "illegal argument found " ^ string_of_typ et ^
-                         " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
-               in (check_assign ft et err, e')
-          in
-          let args' = List.map2 check_call fd.formals args
-          in (fd.rtyp, SCall(fname, args'))
+          if StringMap.mem fname function_decls then
+            let fd = find_func fname in
+            let param_length = List.length fd.formals in
+            if List.length args != param_length then
+              raise (Failure ("expecting " ^ string_of_int param_length ^
+                              " arguments in " ^ string_of_expr call))
+            else let check_call (ft, _) e =
+                  let (et, e') = check_expr e in
+                  let err = "illegal argument found " ^ string_of_typ et ^
+                            " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
+                  in (check_assign ft et err, e')
+              in
+              let args' = List.map2 check_call fd.formals args
+              in (fd.rtyp, SCall(fname, args'))
+          else 
+            raise( Failure( fname ^ "is not a function or lamb"))
+            (* Handle calling a lambda function *)
+            (* if Hashtbl.mem lambs fname then
+                let ld = find_lamb fname in 
+                  print_endline "UPDATED TYPE??";
+                  print_endline (string_of_typ ld.rtyp);
+                  let param_length = List.length ld.formals in
+                  if List.length args != param_length then
+                    raise (Failure ("expecting " ^ string_of_int param_length ^
+                                    " arguments in " ^ string_of_expr call))
+                  else let check_call (ft, _) e =
+                        let (et, e') = check_expr e in
+                        let err = "illegal argument found " ^ string_of_typ et ^
+                                  " expected " ^ string_of_typ ft ^ " in " ^ string_of_expr e
+                        in (check_assign ft et err, e')
+                    in
+                    let args' = List.map2 check_call ld.formals args
+                    in (ld.rtyp, SCall(fname, args'))
+              else raise (Failure (fname ^ " is not a function or lamb")) *)
     and check_bool_expr e =
       let (t, e') = check_expr e in
       match t with

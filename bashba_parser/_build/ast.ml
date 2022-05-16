@@ -50,6 +50,8 @@ let string_of_typ = function
   | Lamb -> "lamb"
   | None -> "None"
   | File -> "File"
+  | IntArray -> "int Array"
+  | StringArray -> "String Array"
 
 let string_of_bind (t, id) = string_of_typ t ^ " " ^ id
 

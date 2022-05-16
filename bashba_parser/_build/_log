@@ -2,31 +2,27 @@
 # Target: bashba.ml.depends, tags: { extension:ml, file:bashba.ml, ocaml, ocamldep, quiet }
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules bashba.ml > bashba.ml.depends # cached
 # Target: ast.ml.depends, tags: { extension:ml, file:ast.ml, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules ast.ml > ast.ml.depends # cached
-# Target: ast.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:ast.cmo, file:ast.ml, implem, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o ast.cmo ast.ml # cached
+/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules ast.ml > ast.ml.depends
 # Target: irgen.ml.depends, tags: { extension:ml, file:irgen.ml, ocaml, ocamldep, quiet }
-/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules irgen.ml > irgen.ml.depends
+/Users/jordhyg/.opam/default/bin/ocamldep.opt -modules irgen.ml > irgen.ml.depends # cached
+# Target: ast.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:ast.cmo, file:ast.ml, implem, ocaml, quiet }
+/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o ast.cmo ast.ml
 # Target: sast.ml.depends, tags: { extension:ml, file:sast.ml, ocaml, ocamldep, quiet }
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules sast.ml > sast.ml.depends # cached
 # Target: sast.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:sast.cmo, file:sast.ml, implem, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o sast.cmo sast.ml # cached
+/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o sast.cmo sast.ml
 # Target: parser.mly, tags: { extension:mly, file:parser.mly, infer, ocaml, ocamlyacc, parser, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlyacc parser.mly # cached
 # Target: parser.mli.depends, tags: { extension:mli, file:parser.mli, ocaml, ocamldep, quiet }
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules parser.mli > parser.mli.depends # cached
-# Target: parser.cmi, tags: { byte, compile, extension:mli, file:parser.mli, interf, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o parser.cmi parser.mli # cached
 # Target: scanner.mll, tags: { extension:mll, file:scanner.mll, lexer, ocaml, ocamllex, quiet }
 /Users/jordhyg/.opam/default/bin/ocamllex.opt -q scanner.mll # cached
 # Target: scanner.ml.depends, tags: { extension:ml, file:scanner.ml, ocaml, ocamldep, quiet }
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules scanner.ml > scanner.ml.depends # cached
-# Target: scanner.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:scanner.cmo, file:scanner.ml, implem, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o scanner.cmo scanner.ml # cached
+# Target: parser.cmi, tags: { byte, compile, extension:mli, file:parser.mli, interf, ocaml, quiet }
+/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o parser.cmi parser.mli
 # Target: semant.ml.depends, tags: { extension:ml, file:semant.ml, ocaml, ocamldep, quiet }
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules semant.ml > semant.ml.depends # cached
-# Target: semant.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:semant.cmo, file:semant.ml, implem, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o semant.cmo semant.ml # cached
 # Target: irgen.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:irgen.cmo, file:irgen.ml, implem, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o irgen.cmo irgen.ml
 + /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o irgen.cmo irgen.ml
@@ -41,20 +37,43 @@ File "irgen.ml", lines 37-43, characters 21-24:
 Warning 8 [partial-match]: this pattern-matching is not exhaustive.
 Here is an example of a case that is not matched:
 (IntArray|StringArray)
+# Target: scanner.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:scanner.cmo, file:scanner.ml, implem, ocaml, quiet }
+/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o scanner.cmo scanner.ml
+# Target: semant.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:semant.cmo, file:semant.ml, implem, ocaml, quiet }
+/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o semant.cmo semant.ml
++ /Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o semant.cmo semant.ml
+File "semant.ml", lines 113-170, characters 25-65:
+113 | .........................function
+114 |         Literal l -> (Int, SLiteral l)
+115 |       | BoolLit l -> let _ = print_endline "BOOL" in (Bool, SBoolLit l)
+116 |       | StringLit l -> (String, SStringLit l)
+117 |       | FileLit l -> (String, SFileLit l)
+...
+167 |               let args' = List.map2 check_call fd.formals args
+168 |               in (fd.rtyp, SCall(fname, args'))
+169 |           else 
+170 |             raise( Failure( fname ^ "is not a function or lamb"))
+Warning 8 [partial-match]: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(IntArray _|StringArray _)
+File "semant.ml", line 94, characters 8-16:
+94 |     let add_lamb l var =
+             ^^^^^^^^
+Warning 26 [unused-var]: unused variable add_lamb.
+File "semant.ml", line 101, characters 8-17:
+101 |     let find_lamb lambname = 
+              ^^^^^^^^^
+Warning 26 [unused-var]: unused variable find_lamb.
 # Target: bashba.cmo, tags: { byte, compile, extension:cmo, extension:ml, file:bashba.cmo, file:bashba.ml, implem, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o bashba.cmo bashba.ml # cached
+/Users/jordhyg/.opam/default/bin/ocamlc.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o bashba.cmo bashba.ml
 # Target: ast.cmx, tags: { compile, extension:cmx, extension:ml, file:ast.cmx, file:ast.ml, implem, native, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o ast.cmx ast.ml # cached
+/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o ast.cmx ast.ml
 # Target: sast.cmx, tags: { compile, extension:cmx, extension:ml, file:sast.cmx, file:sast.ml, implem, native, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o sast.cmx sast.ml # cached
+/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o sast.cmx sast.ml
 # Target: parser.ml.depends, tags: { extension:ml, file:parser.ml, ocaml, ocamldep, quiet }
 /Users/jordhyg/.opam/default/bin/ocamldep.opt -modules parser.ml > parser.ml.depends # cached
 # Target: parser.cmx, tags: { compile, extension:cmx, extension:ml, file:parser.cmx, file:parser.ml, implem, native, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o parser.cmx parser.ml # cached
-# Target: scanner.cmx, tags: { compile, extension:cmx, extension:ml, file:scanner.cmx, file:scanner.ml, implem, native, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o scanner.cmx scanner.ml # cached
-# Target: semant.cmx, tags: { compile, extension:cmx, extension:ml, file:semant.cmx, file:semant.ml, implem, native, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o semant.cmx semant.ml # cached
+/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o parser.cmx parser.ml
 # Target: irgen.cmx, tags: { compile, extension:cmx, extension:ml, file:irgen.cmx, file:irgen.ml, implem, native, ocaml, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o irgen.cmx irgen.ml
 + /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o irgen.cmx irgen.ml
@@ -69,15 +88,42 @@ File "irgen.ml", lines 37-43, characters 21-24:
 Warning 8 [partial-match]: this pattern-matching is not exhaustive.
 Here is an example of a case that is not matched:
 (IntArray|StringArray)
+# Target: scanner.cmx, tags: { compile, extension:cmx, extension:ml, file:scanner.cmx, file:scanner.ml, implem, native, ocaml, quiet }
+/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o scanner.cmx scanner.ml
+# Target: semant.cmx, tags: { compile, extension:cmx, extension:ml, file:semant.cmx, file:semant.ml, implem, native, ocaml, quiet }
+/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o semant.cmx semant.ml
++ /Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o semant.cmx semant.ml
+File "semant.ml", lines 113-170, characters 25-65:
+113 | .........................function
+114 |         Literal l -> (Int, SLiteral l)
+115 |       | BoolLit l -> let _ = print_endline "BOOL" in (Bool, SBoolLit l)
+116 |       | StringLit l -> (String, SStringLit l)
+117 |       | FileLit l -> (String, SFileLit l)
+...
+167 |               let args' = List.map2 check_call fd.formals args
+168 |               in (fd.rtyp, SCall(fname, args'))
+169 |           else 
+170 |             raise( Failure( fname ^ "is not a function or lamb"))
+Warning 8 [partial-match]: this pattern-matching is not exhaustive.
+Here is an example of a case that is not matched:
+(IntArray _|StringArray _)
+File "semant.ml", line 94, characters 8-16:
+94 |     let add_lamb l var =
+             ^^^^^^^^
+Warning 26 [unused-var]: unused variable add_lamb.
+File "semant.ml", line 101, characters 8-17:
+101 |     let find_lamb lambname = 
+              ^^^^^^^^^
+Warning 26 [unused-var]: unused variable find_lamb.
 # Target: bashba.cmx, tags: { compile, extension:cmx, extension:ml, file:bashba.cmx, file:bashba.ml, implem, native, ocaml, quiet }
-/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o bashba.cmx bashba.ml # cached
+/Users/jordhyg/.opam/default/bin/ocamlopt.opt -c -I /Users/jordhyg/.opam/default/lib/llvm -o bashba.cmx bashba.ml
 # Target: bashba.native, tags: { dont_link_with, extension:native, file:bashba.native, link, native, ocaml, program, quiet }
 /Users/jordhyg/.opam/default/bin/ocamlopt.opt -I /Users/jordhyg/.opam/default/lib/llvm /Users/jordhyg/.opam/default/lib/llvm/shared/llvm.cmxa ast.cmx sast.cmx irgen.cmx parser.cmx scanner.cmx semant.cmx bashba.cmx -o bashba.native
 + /Users/jordhyg/.opam/default/bin/ocamlopt.opt -I /Users/jordhyg/.opam/default/lib/llvm /Users/jordhyg/.opam/default/lib/llvm/shared/llvm.cmxa ast.cmx sast.cmx irgen.cmx parser.cmx scanner.cmx semant.cmx bashba.cmx -o bashba.native
-ld: warning: object file (/var/folders/fh/rq_9bcl95x32sx6nssmfg4lr0000gn/T/camlstartupfae921.o) was built for newer macOS version (12.0) than being linked (10.16)
-ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/std_exit.o) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/var/folders/fh/rq_9bcl95x32sx6nssmfg4lr0000gn/T/camlstartupc30f59.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (bashba.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (semant.o) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/std_exit.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (scanner.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (parser.o) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (irgen.o) was built for newer macOS version (12.0) than being linked (10.16)
@@ -92,6 +138,7 @@ ld: warning: dylib (/usr/local/Cellar/llvm/13.0.1_1/lib/libunwind.dylib) was bui
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(camlinternalAtomic.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(camlinternalFormatBasics.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(camlinternalFormat.o)) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(camlinternalLazy.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/llvm/shared/llvm.a(llvm.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__arg.o)) was built for newer macOS version (12.0) than being linked (10.16)
@@ -100,14 +147,20 @@ ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__bytes.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__callback.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__char.o)) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__digest.o)) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__hashtbl.o)) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__int32.o)) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__int64.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__int.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__lexing.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__list.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__map.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__marshal.o)) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__nativeint.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__obj.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__parsing.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__printf.o)) was built for newer macOS version (12.0) than being linked (10.16)
+ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__random.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__seq.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__string.o)) was built for newer macOS version (12.0) than being linked (10.16)
 ld: warning: object file (/Users/jordhyg/.opam/default/lib/ocaml/stdlib.a(stdlib__sys.o)) was built for newer macOS version (12.0) than being linked (10.16)
