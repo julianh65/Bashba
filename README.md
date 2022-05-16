@@ -35,3 +35,17 @@ Run code
 ./bashba.native -l yourcode.mc > a.out
 lli a.out
 ```
+
+### Testing scanning and parsing
+
+'''
+python test_parse.py
+'''
+
+
+### Testing from scanning through codegen
+'''
+python test_codegen.py
+'''
+
+

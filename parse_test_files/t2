@@ -1,0 +1,5 @@
+int j;
+int main()
+{
+    j = 2;
+}

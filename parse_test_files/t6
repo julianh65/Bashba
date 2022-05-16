@@ -1,0 +1,12 @@
+int a;
+int b;
+int main()
+{
+    if (a == b)
+    {
+        a = a + b;
+    } else {
+        b = 2;
+        a = a + b;
+    }
+}

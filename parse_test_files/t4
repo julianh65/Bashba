@@ -1,0 +1,5 @@
+bool b1;
+int main()
+{
+    b1 = True;
+}

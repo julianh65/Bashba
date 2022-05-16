@@ -1,0 +1,6 @@
+int main(int j)
+{
+    int b;
+    b = 34;
+    return j;
+}

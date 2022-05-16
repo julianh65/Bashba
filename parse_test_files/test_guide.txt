@@ -1,0 +1,13 @@
+---------------------------
+t1: int variable declaration
+t2: int variable assignment
+t3: comments
+t4: bool type
+t5: String type
+t6: If-Else statements
+t7: Return statements
+t8: lamb type
+t9: Calling a function
+t10: While, Break statements
+t11: Array declaration
+t12: Array assignment

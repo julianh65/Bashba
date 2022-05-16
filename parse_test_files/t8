@@ -1,0 +1,25 @@
+int main(){
+
+    lamb x;
+    int z;
+
+    x = int y -> int : ( if (y == 2) { y + 2; } else { y + 4;} );
+
+    z = x(2);
+
+    return z;
+    
+}
+
+int foo(int x, lamb y) {
+
+    int c;
+    int d;
+
+    d = x + 3;
+
+    c = y(d);
+
+    return c;
+
+}
