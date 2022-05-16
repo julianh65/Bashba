@@ -54,7 +54,7 @@ typ:
   | FILE { File }
   | INTARRAY { IntArray }
   | STRINGARRAY {StringArray }
-  | FILE { FILEARRAY }
+  | FILE { FileArray }
 
 /* fdecl */
 fdecl:

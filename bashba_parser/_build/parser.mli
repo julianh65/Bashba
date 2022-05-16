@@ -35,6 +35,7 @@ type token =
   | RBRACK
   | STRINGARRAY
   | INTARRAY
+  | FILEARRAY
   | BOOL
   | INT
   | STRING

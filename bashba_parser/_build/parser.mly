@@ -10,6 +10,7 @@ open Ast
 %token LBRACK RBRACK
 %token STRINGARRAY
 %token INTARRAY
+%token FILEARRAY
 %token BOOL INT STRING NONE FILE
 %token <bool> BLIT
 %token <string> ID
@@ -53,6 +54,7 @@ typ:
   | FILE { File }
   | INTARRAY { IntArray }
   | STRINGARRAY {StringArray }
+  | FILE { FileArray }
 
 /* fdecl */
 fdecl:

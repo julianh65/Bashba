@@ -1,6 +1,6 @@
 type bop = Add | Sub | Times | Divide | Mod | Equal | Neq | Leq | Geq | Less | Great | And | Or
 
-type typ = Int | Bool | String | Lamb | None | File | IntArray | StringArray
+type typ = Int | Bool | String | Lamb | None | File | IntArray | StringArray | FileArray
 
 type bind = typ * string
 
@@ -16,6 +16,7 @@ type expr =
   | Lamb of lamb_def
   | IntArray of int list
   | StringArray of string list
+  | FileArray of string list
   | None
 and stmt =
   | Block of stmt list
@@ -52,6 +53,7 @@ let string_of_typ = function
   | File -> "File"
   | IntArray -> "int[]"
   | StringArray -> "String[]"
+  | FileArray -> "File[]"
 
 let string_of_bind (t, id) = string_of_typ t ^ " " ^ id
 
@@ -84,6 +86,7 @@ let rec string_of_expr = function
 | Call(s, l) -> "(" ^ s ^ ")\n"
 | IntArray(s) -> "[" ^ (String.concat ", " (List.map string_of_int s)) ^ "]"
 | StringArray(s) -> "[" ^ (String.concat ", " s) ^ "]"
+| FileArray(s) -> "[" ^ (String.concat ", " s) ^ "]"
 | Lamb(s) -> String.concat "" (List.map string_of_bind s.formals) ^ "->" ^
   string_of_typ s.rtyp ^ " : " ^ "(" ^ 
   String.concat "" (List.map string_of_stmt s.body) ^ ")"
@@ -110,6 +113,7 @@ let string_of_typ = function
   | File -> "File"
   | IntArray -> "int[]"
   | StringArray -> "String[]"
+  | FileArray -> "File[]"
   | None -> "None"
 
 let string_of_bind (t, id) = string_of_typ t ^ " " ^ id
