@@ -50,8 +50,13 @@ let string_of_typ = function
   | Lamb -> "lamb"
   | None -> "None"
   | File -> "File"
+<<<<<<< HEAD
   | IntArray -> "int Array"
   | StringArray -> "String Array"
+=======
+  | IntArray -> "int[]"
+  | StringArray -> "String[]"
+>>>>>>> 9aa6ff1b6f19ac2170d9661c8bf54c8e5064cee6
 
 let string_of_bind (t, id) = string_of_typ t ^ " " ^ id
 
@@ -82,8 +87,8 @@ let rec string_of_expr = function
   string_of_expr e1 ^ " " ^ string_of_op o ^ " " ^ string_of_expr e2
 | Assign(v, e) -> v ^ " = " ^ string_of_expr e
 | Call(s, l) -> "(" ^ s ^ ")\n"
-| IntArray(s) -> "int array"
-| StringArray(s) -> "string array"
+| IntArray(s) -> "[" ^ (String.concat ", " (List.map string_of_int s)) ^ "]"
+| StringArray(s) -> "[" ^ (String.concat ", " s) ^ "]"
 | Lamb(s) -> String.concat "" (List.map string_of_bind s.formals) ^ "->" ^
   string_of_typ s.rtyp ^ " : " ^ "(" ^ 
   String.concat "" (List.map string_of_stmt s.body) ^ ")"
