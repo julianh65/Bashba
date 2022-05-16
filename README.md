@@ -32,6 +32,6 @@ export PATH=/usr/local/opt/llvm/bin:$PATH
 Run code
 
 ```
-./microc.native -l yourcode.mc > a.out
+./bashba.native -l yourcode.mc > a.out
 lli a.out
 ```

@@ -31,7 +31,7 @@ let check (globals, functions) =
       formals = [(Int, "x")];
       locals = []; 
       body = []; } StringMap.empty
-  in
+  in 
 
   (* Add function name to symbol table *)
   let add_func map fd =
