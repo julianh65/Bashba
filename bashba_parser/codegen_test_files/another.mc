@@ -7,6 +7,6 @@ int main()
     y = 3;
     x = 5;
     int z;
-    z = y+5;
+    z = 8;
     print(z);
 }
